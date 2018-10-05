@@ -28,13 +28,6 @@ const GMap = props => {
         // clickableIcons: false
       }}
     >
-      {places.map(marker => (
-        <Marker
-          position={{lat: marker.location.lat, lng: marker.location.lng}}
-          key={marker.id}
-        />
-      ))}
-
       {homes &&
         homes.map(marker => (
           <Marker
@@ -42,6 +35,14 @@ const GMap = props => {
             key={marker.id}
           />
         ))}
+
+      {places.map(marker => (
+        <Marker
+          icon={'http://maps.google.com/mapfiles/ms/micons/yellow-dot.png'}
+          position={{lat: marker.location.lat, lng: marker.location.lng}}
+          key={marker.id}
+        />
+      ))}
     </GoogleMap>
   )
 }
