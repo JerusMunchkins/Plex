@@ -31,6 +31,10 @@ class AddressBook extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.userId !== this.props.userId || nextState !== this.state
+  }
+
   handleChange = (event, value) => {
     this.setState({value})
   }

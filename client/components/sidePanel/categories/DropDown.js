@@ -2,11 +2,12 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import AddIcon from '@material-ui/icons/Add'
+import {connect} from 'react-redux'
 
-const FilterDropDown = props => {
-  //console.log('PROPS IN DROP-DOWN:', props)
+const DropDown = props => {
   const {
-    availableCategories,
+    categories,
     selectedCategories,
     anchorEl,
     handleMenuClose,
@@ -14,13 +15,18 @@ const FilterDropDown = props => {
   } = props
 
   return (
-    <div>
+    <div className="menu">
       <Button
         aria-owns={anchorEl ? 'simple-menu' : null}
         aria-haspopup="true"
+        aria-label="Add"
         onClick={handleMenuClick}
+        variant="outlined"
+        color="primary"
+        style={{marginTop: '8px'}}
       >
-        SELECT FILTERS
+        <AddIcon />
+        Select Places Nearby
       </Button>
       <Menu
         id="simple-menu"
@@ -28,8 +34,8 @@ const FilterDropDown = props => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        {availableCategories &&
-          availableCategories.map(category => (
+        {categories &&
+          categories.map(category => (
             <MenuItem
               key={category.id}
               onClick={e =>
@@ -47,4 +53,12 @@ const FilterDropDown = props => {
   )
 }
 
-export default FilterDropDown
+const mapStateToProps = state => {
+  const {selectedCategories} = state.selectedCategories
+
+  return {
+    selectedCategories
+  }
+}
+
+export default connect(mapStateToProps)(DropDown)

@@ -104,12 +104,14 @@ form div {
 
 .button-wrap {
   display: flex;
-  width: 100%;
-  justify-content: right;
 }
 
 .side-panel-body {
   padding: 0 10px;
+}
+
+.menu-buttons {
+  justify-content: space-evenly;
 }
 
 .addressbook-select {
@@ -118,4 +120,7 @@ form div {
   background-color: #5665bb;
   display: flex;
   justify-content: space-around;
+}
+.menu {
+  width: 44%;
 }

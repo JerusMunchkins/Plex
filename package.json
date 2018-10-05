@@ -52,6 +52,7 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
+    "react-beautiful-dnd": "^9.0.2",
     "react-dom": "^16.4.2",
     "react-google-maps": "^9.4.5",
     "react-number-format": "^3.6.1",

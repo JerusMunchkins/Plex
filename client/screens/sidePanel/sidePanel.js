@@ -3,6 +3,7 @@ import {AddressBook, Categories} from '../../components'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import {DragDropContext} from 'react-beautiful-dnd'
 
 class ScreensSidePanel extends React.Component {
   constructor() {
@@ -17,6 +18,10 @@ class ScreensSidePanel extends React.Component {
     this.setState({value})
   }
 
+  onDragEnd(result) {
+    //
+  }
+
   render() {
     const {value} = this.state
     return (
@@ -24,12 +29,16 @@ class ScreensSidePanel extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Address Book" />
-            <Tab label="Filter Nearby Places" />
+            <Tab label="Filters" />
           </Tabs>
         </AppBar>
 
         {value === 0 && <AddressBook />}
-        {value === 1 && <Categories />}
+        {value === 1 && (
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Categories />
+          </DragDropContext>
+        )}
       </div>
     )
   }

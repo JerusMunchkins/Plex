@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Draggable} from 'react-beautiful-dnd'
 import {removeSelectedFilter} from '../../../store'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
@@ -13,7 +14,15 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   chip: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    width: '250px',
+    display: 'flex',
+    position: 'relative',
+    backgroundColor: 'white'
+  },
+  left: {
+    position: 'absolute',
+    left: 0
   }
 })
 
@@ -23,11 +32,6 @@ function handleChipDelete(chipId) {
   // update - push other filters up
 }
 
-function handleChipClick(chipId) {
-  console.log('I WILL SHOW YOU THE PINS IN THE MAP for:', chipId)
-  // will conditionakly show pins or not
-}
-
 const CategoryChips = props => {
   const {classes, placeId, chipId, priority, label} = props
 
@@ -35,18 +39,16 @@ const CategoryChips = props => {
     <div className={classes.root}>
       {placeId ? (
         <Chip
-          avatar={<Avatar>{priority}</Avatar>}
+          avatar={<Avatar className={classes.left}>{priority}</Avatar>}
           label={label}
-          onClick={() => handleChipClick(chipId)}
           className={classes.chip}
           color="primary"
           variant="outlined"
         />
       ) : (
         <Chip
-          avatar={<Avatar>{priority}</Avatar>}
+          avatar={<Avatar className={classes.left}>{priority}</Avatar>}
           label={label}
-          onClick={() => handleChipClick(chipId)}
           onDelete={() => handleChipDelete(chipId)}
           className={classes.chip}
           color="primary"
@@ -64,7 +66,6 @@ CategoryChips.propTypes = {
 const mapStateToProps = state => {
   const {selectedCategories} = state.selectedCategories
   return {
-    //userId: state.user.id,
     selectedCategories
   }
 }
