@@ -1,9 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {withGoogleMap, GoogleMap, withScriptjs} from 'react-google-maps'
+import {withGoogleMap, GoogleMap, withScriptjs, Marker} from 'react-google-maps'
 
 const GMap = props => {
   const {lat, lng} = props.coordinates
+  const places = props.places
+  const homes = props.homes
+  console.log('PLACES: ', places)
+  console.log('HOMES: ', homes)
+
   return (
     <GoogleMap
       center={new google.maps.LatLng(lat, lng)}
@@ -24,13 +29,33 @@ const GMap = props => {
         ]
         // clickableIcons: false
       }}
-    />
+    >
+      {places.map(marker => (
+        <Marker
+          position={{lat: marker.location.lat, lng: marker.location.lng}}
+          key={marker.id}
+        />
+      ))}
+
+      {homes &&
+        homes.map(marker => (
+          <Marker
+            position={{lat: marker.location.lat, lng: marker.location.lng}}
+            key={marker.id}
+          />
+        ))}
+    </GoogleMap>
   )
 }
 
 const mapState = state => {
+  const {coordinates, homes, places, selectedCategories} = state
+
   return {
-    coordinates: state.coordinates
+    coordinates,
+    homes,
+    places,
+    selectedCategories
   }
 }
 
