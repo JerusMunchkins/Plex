@@ -31,6 +31,7 @@ const GMap = props => {
       {homes &&
         homes.map(marker => (
           <Marker
+            icon={'http://maps.google.com/mapfiles/kml/pal3/icon56.png'}
             position={{lat: marker.location.lat, lng: marker.location.lng}}
             key={marker.id}
           />
@@ -38,7 +39,7 @@ const GMap = props => {
 
       {places.map(marker => (
         <Marker
-          icon={'http://maps.google.com/mapfiles/ms/micons/yellow-dot.png'}
+          icon={'http://maps.google.com/mapfiles/kml/pal4/icon47.png'}
           position={{lat: marker.location.lat, lng: marker.location.lng}}
           key={marker.id}
         />
