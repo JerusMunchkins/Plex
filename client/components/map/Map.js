@@ -6,8 +6,6 @@ const GMap = props => {
   const {lat, lng} = props.coordinates
   const places = props.places
   const homes = props.homes
-  console.log('PLACES: ', places)
-  console.log('HOMES: ', homes)
 
   return (
     <GoogleMap
