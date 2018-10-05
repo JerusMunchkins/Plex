@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Place, Location} = require('../db/models')
+const {Place} = require('../db/models')
 module.exports = router
 
 // POST places
