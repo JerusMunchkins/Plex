@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Place} = require('../db/models')
+const {Place, Location} = require('../db/models')
 module.exports = router
 
 // POST places
@@ -34,6 +34,26 @@ router.delete('/:placeId', async (req, res, next) => {
       where: {id: placeId}
     })
     res.status(202).end()
+  } catch (err) {
+    next(err)
+  }
+})
+
+// GET place and location for map
+router.get('/:placeId', async (req, res, next) => {
+  const {placeId} = req.params
+  try {
+    let pinCoordinates = await Place.findOne({
+      where: {id: placeId},
+      attributes: {exclude: ['createdAt', 'updatedAt']},
+      include: [
+        {
+          model: Location,
+          attributes: {exclude: ['id', 'createdAt', 'updatedAt']}
+        }
+      ]
+    })
+    res.status(200).json(pinCoordinates)
   } catch (err) {
     next(err)
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {AddressBook, CategoryFilter} from '../../components'
+import {AddressBook, Categories} from '../../components'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -29,7 +29,7 @@ class ScreensSidePanel extends React.Component {
         </AppBar>
 
         {value === 0 && <AddressBook />}
-        {value === 1 && <CategoryFilter />}
+        {value === 1 && <Categories />}
       </div>
     )
   }
