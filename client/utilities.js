@@ -17,7 +17,7 @@ export const renderFuncSearch = type => ({
         InputProps={{
           ...getInputProps({
             className: 'location-search-input',
-            style: {fontSize: '20px'}
+            style: {fontSize: '20px', backgroundColor: 'white'}
           })
         }}
         label={text}
@@ -45,7 +45,7 @@ export const renderFuncEdit = ({
       InputProps={{
         ...getInputProps({
           className: 'location-search-input',
-          style: {margin: '8px'}
+          style: {margin: '8px', backgroundColor: 'white'}
         })
       }}
       label="Address"

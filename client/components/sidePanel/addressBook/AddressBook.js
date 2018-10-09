@@ -24,7 +24,7 @@ const styles = theme => ({
   label: {
     textTransform: 'capitalize'
   },
-  indicator: {backgroundColor: 'gray'}
+  indicator: {height: 0}
 })
 
 class AddressBook extends React.Component {
@@ -56,23 +56,25 @@ class AddressBook extends React.Component {
           >
             <Tabs
               classes={{indicator: classes.indicator}}
+              centered={true}
               value={value}
               onChange={this.handleChange}
             >
               <Tab disableRipple label="Homes" icon={<HomeIcon />} />
               <Tab disableRipple label="My Places" icon={<StarIcon />} />
             </Tabs>
+
+            <Autocomplete
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
+                process.env.GOOGLE_API_KEY
+              }&libraries=places`}
+              loadingElement={<div style={{height: `100%`}} />}
+              type={type}
+            />
           </AppBar>
         </div>
 
         <div className="addressbook-display side-panel-body">
-          <Autocomplete
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
-              process.env.GOOGLE_API_KEY
-            }&libraries=places`}
-            loadingElement={<div style={{height: `100%`}} />}
-            type={type}
-          />
           {value === 0 &&
             homes && (
               <HomesList>

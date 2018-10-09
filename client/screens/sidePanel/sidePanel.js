@@ -48,7 +48,7 @@ class ScreensSidePanel extends React.Component {
     return (
       <div id="side-panel">
         <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
+          <Tabs centered={true} value={value} onChange={this.handleChange}>
             <Tab label="Address Book" />
             <Tab label="Filters" />
           </Tabs>
