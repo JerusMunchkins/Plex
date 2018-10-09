@@ -48,12 +48,13 @@ export const fetchAllHomePlaces = userId => async dispatch => {
 export const fetchOneHomePlaces = (userId, homeId) => async dispatch => {
   try {
     dispatch(fetchHomePlacesRequest())
-
+    console.log('in fetchOneHomesPlaces thunk')
     // get users places
     const {data: {places}} = await axios.get(`/api/users/${userId}/places`)
 
     // with new homeId map over places to add to db
     const homePlacePromises = places.map(async place => {
+      console.log('homeId', homeId)
       await axios.post('/api/homes/places', {
         homeId,
         placeId: place.id
