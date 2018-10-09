@@ -1,6 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {withGoogleMap, GoogleMap, withScriptjs, Marker} from 'react-google-maps'
+import {
+  withGoogleMap,
+  GoogleMap,
+  withScriptjs,
+  Marker,
+  InfoWindow
+} from 'react-google-maps'
 import {getBounds} from '../../store'
 import {flattenHomeCategoryResults} from '../../utilities'
 
@@ -32,8 +38,60 @@ class GMap extends React.Component {
     }
   }
 
+  // Assigns the right icon depending on the category
+  returnCategoryIcon = function(arr) {
+    let categories = {
+      supermarket: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      gym: 'http://maps.google.com/mapfiles/kml/pal2/icon57.png',
+      laundry: 'http://maps.google.com/mapfiles/kml/pal4/icon12.png',
+      pharmacy: 'http://maps.google.com/mapfiles/ms/micons/pharmacy-us.png',
+      library: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      church: 'http://maps.google.com/mapfiles/kml/pal2/icon11.png',
+      mosque: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      synagogue: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      hindu_temple: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      bus_station: 'http://maps.google.com/mapfiles/ms/micons/bus.png',
+      train_station: 'http://maps.google.com/mapfiles/ms/micons/rail.png',
+      subway_station: 'http://maps.google.com/mapfiles/ms/micons/subway.png'
+    }
+
+    for (let i = 0; arr.length; i++) {
+      if (Object.keys(categories).includes(arr[i])) {
+        return categories[arr[i]]
+      } else {
+        return 'http://maps.google.com/mapfiles/kml/pal3/icon26.png'
+      }
+    }
+  }
+
   render() {
-    const {places, homes, center} = this.props
+    const {places, homes, center, categoryResults} = this.props
+
+    // Maps all locations into a single array
+    let allLocations = []
+
+    for (let home in categoryResults) {
+      if (categoryResults.hasOwnProperty(home)) {
+        for (let category in categoryResults[home]) {
+          if (categoryResults[home].hasOwnProperty(category)) {
+            for (let i = 0; i < categoryResults[home][category].length; i++) {
+              let item = categoryResults[home][category][i]
+              allLocations.push(item)
+            }
+          }
+        }
+      }
+    }
+
+    // Removes duplicate locations
+    let locationsForMarkers = allLocations.filter(function(obj, index, self) {
+      return (
+        index ===
+        self.findIndex(function(t) {
+          return t.vicinity === obj.vicinity
+        })
+      )
+    })
 
     return (
       <GoogleMap
@@ -53,7 +111,6 @@ class GMap extends React.Component {
               elementType: 'labels.icon'
             }
           ]
-          // clickableIcons: false
         }}
       >
         {homes &&
@@ -61,17 +118,31 @@ class GMap extends React.Component {
             <Marker
               icon={'http://maps.google.com/mapfiles/kml/pal3/icon56.png'}
               position={{lat: marker.location.lat, lng: marker.location.lng}}
+              // onClick={this.onMarkerClick}
               key={marker.id}
             />
           ))}
-
         {places.map(marker => (
           <Marker
             icon={'http://maps.google.com/mapfiles/kml/pal4/icon47.png'}
             position={{lat: marker.location.lat, lng: marker.location.lng}}
+            // onClick={this.onMarkerClick}
             key={marker.id}
           />
         ))}
+
+        {locationsForMarkers &&
+          locationsForMarkers.map(marker => (
+            <Marker
+              icon={this.returnCategoryIcon(marker.types)}
+              position={{
+                lat: marker.geometry.location.lat,
+                lng: marker.geometry.location.lng
+              }}
+              // onClick={this.onMarkerClick}
+              key={marker.id}
+            />
+          ))}
       </GoogleMap>
     )
   }
