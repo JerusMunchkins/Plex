@@ -78,6 +78,7 @@ export const deleteHomeInHomePlaces = homeId => dispatch => {
 }
 
 const initialState = {
+  homePlaces: {},
   loaded: false,
   fetchingCategoryResults: false,
   errorFetching: false
@@ -87,16 +88,19 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case FETCH_ALL_HOME_PLACES_SUCCESS:
       return {
-        ...action.homePlaces,
+        homePlaces: {...state.homePlaces, ...action.homePlaces},
         loaded: true,
         fetchingCategoryResults: false,
         errorFetching: false
       }
     // case FETCH_ONE_HOME_PLACES_SUCCESS:
     //   return {...state}
+    // Phan: make sure you are updating the
+    // 'homePlaces' key in the 'homePlaces' store
+    // because I needed to make sure they are separated from the meta data keys
     case DELETED_HOME_IN_HOME_PLACES:
       const removedHomeState = {...state}
-      delete removedHomeState[action.homeId]
+      delete removedHomeState.homePlaces[action.homeId]
       return removedHomeState
     case FETCH_HOME_PLACES_REQUEST:
       return {

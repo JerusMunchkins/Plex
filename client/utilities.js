@@ -180,40 +180,28 @@ export const states = [
   'WY'
 ]
 
-export const getHomeRankings = (homeCategories, selectedCategories) => {
-  const categoryWeights = selectedCategories.reduce(
-    (weights, category, index) => {
-      const key = category.categoryId || category.placeId
-      weights[key] = {weight: index + 1}
-      return weights
-    },
-    {}
-  )
+export const getHomeRankings = (
+  homeCategories,
+  homePlaces,
+  selectedCategories
+) => {
   const homeKeys = Object.keys(homeCategories)
-  const categoryKeys = Object.keys(homeCategories[homeKeys[0]])
-  const [results, scores] = getScores()
-  const ranks = scores.reduce((final, score, index) => {
-    final[index] = Number(results[score])
-    return final
-  }, {})
+  const length = selectedCategories.length
+  const results = []
 
-  return ranks
-
-  function getScores() {
-    const results = {}
-    const scores = []
-    for (let i = 0; i < homeKeys.length; i++) {
-      let key = 0
-      const homeId = homeKeys[i]
-      for (let j = 0; j < categoryKeys.length; j++) {
-        const catId = categoryKeys[j]
-        const {distanceValue} = homeCategories[homeId][catId]
-        const score = categoryWeights[catId].weight * distanceValue
-        key = key + score
-        scores[i] = (scores[i] || 0) + score
-      }
-      results[key] = homeId
+  for (let i = 0; i < homeKeys.length; i++) {
+    const homeId = homeKeys[i]
+    for (let j = 0; j < length; j++) {
+      results[i] = {homeId: homeId}
+      const selected = selectedCategories[j]
+      const list = selected.categoryId ? homeCategories : homePlaces
+      const locationId = selected.categoryId
+        ? selected.categoryId
+        : selected.placeId
+      const {distanceValue} = list[homeId][locationId]
+      const score = selected.priority * distanceValue
+      results[i].score = (results[i].score || 0) + score
     }
-    return [results, scores.sort()]
   }
+  return results.sort((a, b) => a.score - b.score)
 }

@@ -35,13 +35,15 @@ class RankingTabs extends React.Component {
   }
 
   getRankedHomeId = () => {
-    const {homeCategories, selectedCategories} = this.props
-    console.log('homeCategories', homeCategories)
-    console.log('selectedCategories', selectedCategories)
+    const {homeCategories, homePlaces, selectedCategories} = this.props
     const homeCatKeys = Object.keys(homeCategories)
+    const homePlacesKeys = Object.keys(homePlaces)
     const selectedCatKeys = Object.keys(selectedCategories)
-    if (homeCatKeys.length > 0 && selectedCatKeys.length > 0) {
-      return getHomeRankings(homeCategories, selectedCategories)
+    const homeCatExists = homeCatKeys.length > 0
+    const selectedCatExists = selectedCatKeys.length > 0
+    const homePlacesExists = homePlacesKeys.length > 0
+    if (homeCatExists && selectedCatExists && homePlacesExists) {
+      return getHomeRankings(homeCategories, homePlaces, selectedCategories)
     }
   }
 
@@ -63,12 +65,12 @@ class RankingTabs extends React.Component {
           >
             {rankings &&
               homes.map((home, i) => {
-                const homeId = rankings[i]
+                const homeId = rankings[i].homeId
                 return <Tab key={homeId} label={i + 1} />
               })}
           </Tabs>
         </AppBar>
-        {rankings && <HomeTab homeId={rankings[value]} />}
+        {rankings && <HomeTab homeId={Number(rankings[value].homeId)} />}
       </div>
     )
   }
@@ -80,7 +82,8 @@ const mapState = state => {
     userId: state.user.id,
     markers: state.categoryResults,
     homeCategories: state.homeCategories.homeCategories,
-    selectedCategories: state.selectedCategories.selectedCategories
+    selectedCategories: state.selectedCategories.selectedCategories,
+    homePlaces: state.homePlaces.homePlaces
   }
 }
 
