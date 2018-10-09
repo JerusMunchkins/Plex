@@ -35,41 +35,49 @@ class RankingTabs extends React.Component {
   }
 
   getRankedHomeId = () => {
-    const {homeCategories, selectedCategories} = this.props
-    console.log('homeCategories', homeCategories)
-    console.log('selectedCategories', selectedCategories)
+    const {
+      homeCategories: {homeCategories},
+      homePlaces: {homePlaces},
+      selectedCategories
+    } = this.props
     const homeCatKeys = Object.keys(homeCategories)
+    const homePlacesKeys = Object.keys(homePlaces)
     const selectedCatKeys = Object.keys(selectedCategories)
-    if (homeCatKeys.length > 0 && selectedCatKeys.length > 0) {
-      return getHomeRankings(homeCategories, selectedCategories)
+    const homeCatExists = homeCatKeys.length > 0
+    const selectedCatExists = selectedCatKeys.length > 0
+    const homePlacesExists = homePlacesKeys.length > 0
+    if (homeCatExists && selectedCatExists && homePlacesExists) {
+      return getHomeRankings(homeCategories, homePlaces, selectedCategories)
     }
   }
 
   render() {
-    const {classes, homes} = this.props
+    const {classes, homes, homeCategories, homePlaces} = this.props
     const {value} = this.state
     const rankings = this.getRankedHomeId()
-    console.log('Rankings', rankings)
     return (
-      <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            scrollable
-            scrollButtons="auto"
-          >
-            {rankings &&
-              homes.map((home, i) => {
-                const homeId = rankings[i]
-                return <Tab key={homeId} label={i + 1} />
-              })}
-          </Tabs>
-        </AppBar>
-        {rankings && <HomeTab homeId={rankings[value]} />}
-      </div>
+      homeCategories.loaded &&
+      homePlaces.loaded && (
+        <div className={classes.root}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              scrollable
+              scrollButtons="auto"
+            >
+              {rankings &&
+                homes.map((home, i) => {
+                  const homeId = rankings[i].homeId
+                  return <Tab key={homeId} label={i + 1} />
+                })}
+            </Tabs>
+          </AppBar>
+          {rankings && <HomeTab homeId={Number(rankings[value].homeId)} />}
+        </div>
+      )
     )
   }
 }
@@ -79,8 +87,9 @@ const mapState = state => {
     homes: state.homes,
     userId: state.user.id,
     markers: state.categoryResults,
-    homeCategories: state.homeCategories.homeCategories,
-    selectedCategories: state.selectedCategories.selectedCategories
+    homeCategories: state.homeCategories,
+    selectedCategories: state.selectedCategories.selectedCategories,
+    homePlaces: state.homePlaces
   }
 }
 

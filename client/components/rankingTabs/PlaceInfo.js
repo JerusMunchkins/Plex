@@ -38,6 +38,7 @@ const PlaceInfo = props => {
   return homeCategories.loaded && categoryResults.loaded ? (
     <div className={classes.root}>
       {priorities.map(item => {
+        // console.log('item')
         if (
           !homeCategories.homeCategories[homeId][item.categoryId] &&
           !item.placeId
@@ -53,7 +54,7 @@ const PlaceInfo = props => {
               .map(word => word[0].toUpperCase() + word.slice(1))
               .join(' ')})`
         const info = item.placeId
-          ? homePlaces[homeId][item.placeId]
+          ? homePlaces.homePlaces[homeId][item.placeId]
           : homeCategories.homeCategories[homeId][item.categoryId]
         return (
           <ExpansionPanel key={item.priority}>
