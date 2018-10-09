@@ -198,6 +198,7 @@ export const getHomeRankings = (
       const locationId = selected.categoryId
         ? selected.categoryId
         : selected.placeId
+      debugger
       const {distanceValue} = list[homeId][locationId]
       const score = selected.priority * distanceValue
       results[i].score = (results[i].score || 0) + score

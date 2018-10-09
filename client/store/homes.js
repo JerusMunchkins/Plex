@@ -41,9 +41,11 @@ export const postHome = ({userId, address, lat, lng}) => async dispatch => {
 
     // GET all homes
     const {data: {homes}} = await axios.get(`/api/users/${userId}/homes`)
-    dispatch(fetchOneHomePlaces(userId, homeId))
-    dispatch(fetchAllCategoryResultsOneHome(userId, homeId, {lat, lng}))
-    dispatch(gotHomes(homes))
+    await Promise.all([
+      dispatch(gotHomes(homes)),
+      dispatch(fetchOneHomePlaces(userId, homeId)),
+      dispatch(fetchAllCategoryResultsOneHome(userId, homeId, {lat, lng}))
+    ])
   } catch (err) {
     console.error('An error occurred while posting a new home')
   }
