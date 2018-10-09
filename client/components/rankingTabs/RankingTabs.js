@@ -55,8 +55,6 @@ class RankingTabs extends React.Component {
     const {classes, homes, homeCategories, homePlaces} = this.props
     const {value} = this.state
     const rankings = this.getRankedHomeId()
-    console.log('Rankings', rankings)
-    console.log('homes', homes)
     return (
       homeCategories.loaded &&
       homePlaces.loaded && (

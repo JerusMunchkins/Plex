@@ -190,8 +190,6 @@ export const getHomeRankings = (
   const length = selectedCategories.length
   const results = []
   for (let i = 0; i < homeKeys.length; i++) {
-    console.log('homeKeys in homeCategories', homeKeys)
-    console.log('homeKeys in homePlaces', homeKeys2)
     const homeId = homeKeys[i]
     for (let j = 0; j < length; j++) {
       results[i] = {homeId: homeId}
@@ -200,7 +198,9 @@ export const getHomeRankings = (
       const locationId = selected.categoryId
         ? selected.categoryId
         : selected.placeId
-      // debugger
+      console.log('List', list)
+      console.log('homeId', homeId)
+      console.log('locationId', locationId)
       const {distanceValue} = list[homeId][locationId]
       const score = selected.priority * distanceValue
       results[i].score = (results[i].score || 0) + score
