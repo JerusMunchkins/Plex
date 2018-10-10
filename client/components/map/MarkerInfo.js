@@ -11,7 +11,6 @@ class MarkerInfo extends React.Component {
   }
 
   render() {
-    console.log('MARKER INFO PROPS:', this.props)
     const {address, icon, image, name, position, price} = this.props
     return (
       <Marker
