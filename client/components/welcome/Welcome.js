@@ -7,7 +7,7 @@ import {
   Select,
   InputLabel,
   FormControl
-} from '@material-ui/core/'
+} from '@material-ui/core'
 import {getCenter} from '../../store'
 import {states} from '../../utilities'
 

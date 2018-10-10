@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Droppable, Draggable} from 'react-beautiful-dnd'
 import {fetchSelectedCategories} from '../../../store'
-import Typography from '@material-ui/core/Typography'
 import CategoryChips from './CategoryChips'
 
 class SelectedCategories extends React.Component {
@@ -23,7 +22,6 @@ class SelectedCategories extends React.Component {
 
     return (
       <div>
-        <Typography variant="subheading">Priority List</Typography>
         <Droppable droppableId="droppable-1">
           {(provided, snapshot) => (
             <ul

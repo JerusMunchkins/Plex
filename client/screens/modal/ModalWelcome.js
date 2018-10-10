@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Modal, withStyles} from '@material-ui/core/'
+import {Modal, withStyles} from '@material-ui/core'
 
 import {Welcome} from '../../components'
 

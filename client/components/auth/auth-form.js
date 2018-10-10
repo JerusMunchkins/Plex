@@ -2,49 +2,102 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../../store'
+import {
+  withStyles,
+  Typography,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField
+} from '@material-ui/core'
+import {Visibility, VisibilityOff} from '@material-ui/icons'
 
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+class AuthForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      showPassword: false
+    }
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        {name === 'signup' && (
-          <div>
-            <label htmlFor="first-name">
-              <small>First Name</small>
-            </label>
-            <input name="first-name" type="text" />
-          </div>
-        )}
-        {name === 'signup' && (
-          <div>
-            <label htmlFor="last-name">
-              <small>Last Name</small>
-            </label>
-            <input name="last-name" type="text" />
-          </div>
-        )}
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
-  )
+  handleChange = prop => event => {
+    this.setState({[prop]: event.target.value})
+  }
+
+  handleClickShowPassword = () => {
+    this.setState(state => ({showPassword: !state.showPassword}))
+  }
+
+  render() {
+    const {name, displayName, handleSubmit, error} = this.props
+    return (
+      <div className="welcome-col">
+        <form onSubmit={handleSubmit} className="auth-form">
+          {name === 'signup' && (
+            <TextField
+              onChange={this.handleChange('first')}
+              id="standard-name"
+              label="First Name"
+              margin="normal"
+            />
+          )}
+          {name === 'signup' && (
+            <TextField
+              onChange={this.handleChange('last')}
+              label="Last Name"
+              margin="normal"
+            />
+          )}
+          <TextField
+            onChange={this.handleChange('email')}
+            label="Email"
+            margin="normal"
+          />
+
+          <TextField
+            id="outlined-adornment-password"
+            type={this.state.showPassword ? 'text' : 'password'}
+            label="Password"
+            value={this.state.password}
+            onChange={this.handleChange('password')}
+            margin="normal"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={this.handleClickShowPassword}
+                  >
+                    {this.state.showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{
+              width: '100%',
+              backgroundColor: '#3f51b5',
+              marginTop: '10px',
+              color: 'white'
+            }}
+            type="submit"
+          >
+            {displayName}
+          </Button>
+
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    )
+  }
 }
 
 const mapLogin = state => {

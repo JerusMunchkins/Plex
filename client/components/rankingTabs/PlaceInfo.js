@@ -21,8 +21,14 @@ const styles = theme => ({
     fontSize: 32
   },
   heading: {
+    display: 'inline',
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular
+  },
+  caption: {
+    display: 'inline',
+    marginLeft: '20px',
+    lineHeight: 2
   }
 })
 
@@ -38,7 +44,6 @@ const PlaceInfo = props => {
   return homeCategories.loaded && categoryResults.loaded ? (
     <div className={classes.root}>
       {priorities.map(item => {
-        // console.log('item')
         if (
           !homeCategories.homeCategories[homeId][item.categoryId] &&
           !item.placeId
@@ -47,33 +52,43 @@ const PlaceInfo = props => {
         }
         const name = item.placeId
           ? item.label
-          : `${
-              homeCategories.homeCategories[homeId][item.categoryId].name
-            } (${item.label
+          : `${homeCategories.homeCategories[homeId][item.categoryId].name}`
+        const type = item.placeId
+          ? 'My place'
+          : `${item.label
               .split('_')
               .map(word => word[0].toUpperCase() + word.slice(1))
-              .join(' ')})`
+              .join(' ')}`
         const info = item.placeId
           ? homePlaces.homePlaces[homeId][item.placeId]
           : homeCategories.homeCategories[homeId][item.categoryId]
         return (
-          <ExpansionPanel key={item.priority}>
+          <ExpansionPanel key={item.priority} defaultExpanded={true}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography className={classes.heading}>
                 {name} - {info.distanceText}
               </Typography>
+              <Typography className={classes.caption} variant="caption">
+                {type}
+              </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
+              <div className="flex-container fields duration-wrapper">
                 <DirectionsCar className={classes.icon} />
-                {info.drivingText}
+                <Typography>{info.drivingText}</Typography>
+              </div>
+              <div className="flex-container fields duration-wrapper">
                 <DirectionsTransit className={classes.icon} />
-                {info.transitText}
+                <Typography>{info.transitText}</Typography>
+              </div>
+              <div className="flex-container fields duration-wrapper">
                 <DirectionsBike className={classes.icon} />
-                {info.bicyclingText}
+                <Typography>{info.bicyclingText}</Typography>
+              </div>
+              <div className="flex-container fields duration-wrapper">
                 <DirectionsWalk className={classes.icon} />
-                {info.walkingText}
-              </Typography>
+                <Typography>{info.walkingText}</Typography>
+              </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         )

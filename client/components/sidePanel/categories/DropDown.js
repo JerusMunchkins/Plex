@@ -32,8 +32,8 @@ const DropDown = props => {
         color="primary"
         style={{marginTop: '8px', backgroundColor: 'white'}}
       >
-        <AddIcon />
-        Select Places Nearby
+        <AddIcon style={{marginRight: '5px'}} />
+        Select Nearby Places
       </Button>
       <Menu
         id="simple-menu"

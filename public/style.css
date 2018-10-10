@@ -40,7 +40,7 @@ label {
   height: 3.5em;
   width: 3.5em;
   border-radius: 100px;
-  background-color: rgb(255, 134, 35);
+  background-color: #ff595e;
 }
 
 .logo {
@@ -53,6 +53,10 @@ label {
 .form-welcome {
   margin: 0.5em;
   display: inline-block;
+}
+
+.welcome-modal {
+  justify-content: space-evenly;
 }
 
 .fields {
@@ -129,6 +133,10 @@ label {
   margin: 0px 0px;
 }
 
+.inline {
+  display: inline-block;
+}
+
 .auto-form {
   margin-left: -10px;
 }
@@ -150,21 +158,44 @@ label {
 
 .menu-buttons {
   justify-content: space-evenly;
+  margin-top: 15px;
 }
 
 .addressbook-display {
   overflow-y: auto;
-  height: calc(80vh - 120px);
+  height: calc(80vh - 200px);
   width: 100%;
 }
 
 .addressbook-select {
   display: flex;
   justify-content: space-around;
+}
+
+.welcome-col {
+  margin-right: 47px;
+}
+
+.auth-form {
+  display: flex;
   flex-flow: column;
 }
-.menu {
-  width: 44%;
+
+.auth-form:after {
+  content: '';
+  background-color: #d5d4d4;
+  position: absolute;
+  width: 1px;
+  height: 290px;
+  top: 224px;
+  display: block;
+  right: 282px;
+}
+
+.about-buttons {
+  transform: translate(0, 8%);
+  top: 50%;
+  margin: 0 0;
 }
 
 .search-wrap {
@@ -172,10 +203,15 @@ label {
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
-  margin: 20px 0 20px 0;
+  margin: 0px 0 20px 0;
 }
 
 .absolute-right {
   position: absolute;
   right: 0;
+}
+
+.duration-wrapper {
+  min-width: 40px;
+  margin-right: 14px;
 }

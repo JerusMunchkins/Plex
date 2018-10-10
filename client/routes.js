@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {ScreensAbout, ScreensModalLogin, ScreensModalSignup} from './screens'
 import {me} from './store'
@@ -13,6 +13,17 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
+        <Route
+          exact
+          path="/"
+          render={() =>
+            this.props.center ? (
+              <Redirect to="/about" />
+            ) : (
+              <Redirect to="home" />
+            )
+          }
+        />
         <Route path="/about" component={ScreensAbout} />
         <Route path="/login" component={ScreensModalLogin} />
         <Route path="/signup" component={ScreensModalSignup} />
@@ -28,7 +39,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    center: state.coordinates.center
   }
 }
 

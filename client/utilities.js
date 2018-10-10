@@ -10,7 +10,7 @@ export const renderFuncSearch = type => ({
   getSuggestionItemProps,
   loading
 }) => {
-  const text = type === 'Home' ? 'Add Homes' : 'Add Places'
+  const text = type === 'Home' ? 'Add Homes...' : 'Add Places..'
   return (
     <div className="content-wrap">
       <TextField
@@ -115,6 +115,13 @@ export const flattenHomeCategoryResults = categoryResultsObj => {
 export const removeCountry = address => {
   const arr = address.split(',')
   return arr.slice(0, arr.length - 1).join(',')
+}
+
+export const styleSuggestions = suggestion => {
+  const arr = suggestion.split(', ')
+  const name = arr[0]
+  const address = arr.slice(1).join(', ')
+  return [name, address]
 }
 
 export const states = [

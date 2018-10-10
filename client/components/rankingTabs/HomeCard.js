@@ -3,12 +3,15 @@ import {connect} from 'react-redux'
 import NumberFormat from 'react-number-format'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography
+} from '@material-ui/core'
+import {removeCountry} from '../../utilities'
 
 const styles = {
   card: {
@@ -27,9 +30,9 @@ const HomeCard = props => {
       <CardMedia className={classes.media} image={home.imgUrl} />
       <CardContent>
         <Typography gutterBottom variant="headline" component="h2">
-          {home.location.address}
+          {removeCountry(home.location.address)}
         </Typography>
-        <Typography variant="headline" component="h2">
+        <Typography variant="subheading" component="h2">
           <NumberFormat
             value={home.price}
             displayType="text"
