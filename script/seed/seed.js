@@ -22,9 +22,9 @@ const locationData = [
     address: '1932 N Burling Street, Chicago, IL 60614, USA'
   },
   {
-    lat: 41.9163896,
-    lng: -87.6478731,
-    address: '1909 N Orchard Street, Chicago, IL 60614, USA'
+    lat: 41.8823364,
+    lng: -87.6269636,
+    address: '6 N Michigan Ave, Chicago, IL 60602, USA'
   },
   {
     lat: 41.8952701,
@@ -61,22 +61,22 @@ const homeData = [
   {
     locationId: 1,
     price: 50000000,
-    imageUrl: 'https://bit.ly/2R3GLFx'
+    imgUrl: 'https://photos.zillowstatic.com/p_f/ISi79n7e5lwahu0000000000.jpg'
   },
   {
     locationId: 2,
-    price: 15500000,
-    imageUrl: 'https://bit.ly/2N7GYnO'
+    price: 4450000,
+    imgUrl: 'https://photos.zillowstatic.com/p_h/ISyjtzdgha8ozt0000000000.jpg'
   },
   {
     locationId: 7,
     price: 11000000,
-    imageUrl: 'https://bit.ly/2Ilv7BX'
+    imgUrl: 'https://photos.zillowstatic.com/p_h/ISug4vtydsivdw1000000000.jpg'
   },
   {
     locationId: 8,
     price: 10950000,
-    imageUrl: 'https://bit.ly/2DzCuH1'
+    imgUrl: 'https://photos.zillowstatic.com/p_h/ISp1e5rrucehcn1000000000.jpg'
   }
 ]
 const placeData = [
@@ -116,8 +116,8 @@ const categoryData = [
 const userHomeData = [
   {userId: 1, homeId: 1},
   {userId: 1, homeId: 2},
-  {userId: 2, homeId: 3},
-  {userId: 2, homeId: 4}
+  {userId: 1, homeId: 3},
+  {userId: 1, homeId: 4}
 ]
 
 const homePlaceData = [
