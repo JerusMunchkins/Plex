@@ -1,22 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../../store'
-import {
-  withStyles,
-  Typography,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField
-} from '@material-ui/core'
+import {Button, IconButton, InputAdornment, TextField} from '@material-ui/core'
 import {Visibility, VisibilityOff} from '@material-ui/icons'
 
 class AuthForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      showPassword: false
+      showPassword: false,
+      first: '',
+      last: '',
+      email: '',
+      password: ''
     }
   }
 
@@ -32,11 +30,12 @@ class AuthForm extends React.Component {
     const {name, displayName, handleSubmit, error} = this.props
     return (
       <div className="welcome-col">
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleSubmit} name={name} className="auth-form">
           {name === 'signup' && (
             <TextField
               onChange={this.handleChange('first')}
-              id="standard-name"
+              id="first"
+              value={this.state.first}
               label="First Name"
               margin="normal"
             />
@@ -44,18 +43,22 @@ class AuthForm extends React.Component {
           {name === 'signup' && (
             <TextField
               onChange={this.handleChange('last')}
+              id="last"
+              value={this.state.last}
               label="Last Name"
               margin="normal"
             />
           )}
           <TextField
             onChange={this.handleChange('email')}
+            id="email"
+            value={this.state.email}
             label="Email"
             margin="normal"
           />
 
           <TextField
-            id="outlined-adornment-password"
+            id="password"
             type={this.state.showPassword ? 'text' : 'password'}
             label="Password"
             value={this.state.password}
@@ -116,20 +119,37 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
+  const {history, handleSlide} = ownProps
+  console.log('ownprops', ownProps)
   return {
     handleSubmit(evt) {
       evt.preventDefault()
+      handleSlide()
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      let first = null
+      let last = null
+      if (formName === 'signup') {
+        first = evt.target.first.value
+        last = evt.target.last.value
+        dispatch(auth(email, password, formName, first, last))
+        history.push('/begin')
+      } else {
+        history.push('/home')
+      }
+      window.setTimeout(
+        dispatch,
+        500,
+        auth(email, password, formName, first, last)
+      )
     }
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = withRouter(connect(mapLogin, mapDispatch)(AuthForm))
+export const Signup = withRouter(connect(mapSignup, mapDispatch)(AuthForm))
 
 /**
  * PROP TYPES

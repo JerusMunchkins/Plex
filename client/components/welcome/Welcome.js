@@ -39,9 +39,12 @@ class Welcome extends React.Component {
   }
 
   handleSubmit = e => {
+    const {handleSlide, getCenter} = this.props
     e.preventDefault()
+    handleSlide()
     const {city, state} = this.state
-    this.props.getCenter(city, state)
+    // window.setTimeout(getCenter, 500, city, state)
+    // getCenter(city, state)
   }
 
   render() {
@@ -49,8 +52,7 @@ class Welcome extends React.Component {
     const {classes} = this.props
     return (
       <div className="form form-welcome">
-        <h1>Welcome to Loco</h1>
-        <h3>Make your move</h3>
+        <h2>Make your move</h2>
         <p>Enter the city of your next big move!</p>
         <div className="form-welcome">
           <div className="fields">

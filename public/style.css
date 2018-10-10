@@ -57,6 +57,8 @@ label {
 
 .welcome-modal {
   justify-content: space-evenly;
+  padding-bottom: 15px;
+  position: relative;
 }
 
 .fields {
@@ -173,7 +175,7 @@ label {
 }
 
 .welcome-col {
-  margin-right: 47px;
+  margin-right: 25px;
 }
 
 .auth-form {
@@ -181,7 +183,7 @@ label {
   flex-flow: column;
 }
 
-.auth-form:after {
+/* .auth-form:after {
   content: '';
   background-color: #d5d4d4;
   position: absolute;
@@ -190,6 +192,11 @@ label {
   top: 224px;
   display: block;
   right: 282px;
+} */
+
+.divider {
+  background-color: #d5d4d4;
+  width: 1px;
 }
 
 .about-buttons {
@@ -204,6 +211,13 @@ label {
   align-items: center;
   padding: 0 15px;
   margin: 0px 0 20px 0;
+}
+
+.all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .absolute-right {

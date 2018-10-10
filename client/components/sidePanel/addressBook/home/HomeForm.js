@@ -90,9 +90,22 @@ class HomeForm extends React.Component {
           price={price}
           handleChange={this.handleChange}
         />
+        {/* keep for now - trying to get an alternative component to work
+        <TextField
+          label="Price"
+          value={price}
+          className={classes.textField}
+          placeholder="0"
+          InputProps={{
+            className: classes.input,
+            type: 'number',
+            startAdornment: <InputAdornment position="start">$</InputAdornment>
+          }}
+          onChange={this.handleChange('price')}
+        /> */}
         <TextField
           label="URL"
-          helperText="Add a hyperlink to your listing"
+          helperText="Save a hyperlink to easily find more information"
           value={link}
           className={classes.textField}
           InputProps={{className: classes.input}}
