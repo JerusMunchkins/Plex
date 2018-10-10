@@ -42,7 +42,10 @@ class ModalAbout extends React.Component {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={!center.lat || pathname === '/about'}
-          onBackdropClick={() => pathname === '/about' && history.push('/home')}
+          onBackdropClick={() => {
+            console.log('pathname', pathname)
+            pathname === '/about' && history.push('/home')
+          }}
         >
           <div className="flex-container all-center">
             <Slide direction="up" in={checked} mountOnEnter unmountOnExit>

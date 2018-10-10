@@ -43,8 +43,6 @@ class Welcome extends React.Component {
     e.preventDefault()
     handleSlide()
     const {city, state} = this.state
-    // window.setTimeout(getCenter, 500, city, state)
-    // getCenter(city, state)
   }
 
   render() {
