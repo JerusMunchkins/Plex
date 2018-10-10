@@ -1,14 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  withStyles,
-  AppBar,
-  Tabs,
-  Tab,
-  Typography,
-  Toolbar
-} from '@material-ui/core/'
+import {withStyles} from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 import StarIcon from '@material-ui/icons/Star'
 import {HomeTab} from '../'
 import {getBounds} from '../../store'

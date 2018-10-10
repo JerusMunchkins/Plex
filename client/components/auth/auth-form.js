@@ -3,8 +3,12 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../../store'
-import {Button, IconButton, InputAdornment, TextField} from '@material-ui/core'
-import {Visibility, VisibilityOff} from '@material-ui/icons'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 class AuthForm extends React.Component {
   constructor() {

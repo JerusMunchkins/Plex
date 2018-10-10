@@ -1,7 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Modal, withStyles, Typography, Button} from '@material-ui/core'
+import {withStyles} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Modal from '@material-ui/core/Modal'
+import Typography from '@material-ui/core/Typography'
 import Slide from '@material-ui/core/Slide'
 import {Login, Signup} from '../../components'
 

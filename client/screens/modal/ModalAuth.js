@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {withStyles, Modal} from '@material-ui/core'
+import {withStyles} from '@material-ui/core'
+import Modal from '@material-ui/core/Modal'
 import {Login, Signup} from '../../components'
 
 const styles = theme => ({
