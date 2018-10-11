@@ -1,12 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {AddressBook, Categories} from '../../components'
+import {withStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import {DragDropContext} from 'react-beautiful-dnd'
 import {fetchSelectedCategoriesSuccess} from '../../store'
 import {reorderAndShift, updateCategoriesInDb} from '../../utilities'
+
+const styles = theme => ({
+  label: {
+    fontWeight: 'bold',
+    fontSize: '14px'
+  }
+})
 
 class ScreensSidePanel extends React.Component {
   constructor() {
@@ -45,12 +53,13 @@ class ScreensSidePanel extends React.Component {
 
   render() {
     const {value} = this.state
+    const {classes} = this.props
     return (
       <div id="side-panel">
         <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Address Book" />
-            <Tab label="Filters" />
+          <Tabs centered={true} value={value} onChange={this.handleChange}>
+            <Tab classes={{label: classes.label}} label="Address Book" />
+            <Tab classes={{label: classes.label}} label="Filters" />
           </Tabs>
         </AppBar>
 
@@ -74,4 +83,6 @@ const mapDispatchToProps = dispatch => ({
   reorderList: payload => dispatch(fetchSelectedCategoriesSuccess(payload))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreensSidePanel)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(ScreensSidePanel)
+)

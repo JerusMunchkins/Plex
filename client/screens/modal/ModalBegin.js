@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Modal, withStyles} from '@material-ui/core/'
+import {withStyles} from '@material-ui/core/styles'
+import Slide from '@material-ui/core/Slide'
+import Modal from '@material-ui/core/Modal'
 
 import {Welcome} from '../../components'
 
@@ -18,9 +20,20 @@ const styles = theme => ({
   }
 })
 
-class WelcomeModal extends React.Component {
+class ModalBegin extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      checked: true
+    }
+  }
+  handleSlide = () => {
+    this.setState(state => ({checked: !state.checked}))
+  }
+
   render() {
     const {classes} = this.props
+    const {checked} = this.state
     return (
       <div>
         <Modal
@@ -28,9 +41,11 @@ class WelcomeModal extends React.Component {
           aria-describedby="simple-modal-description"
           open={!this.props.center.lat}
         >
-          <div className={classes.paper}>
-            <Welcome />
-          </div>
+          <Slide direction="up" in={checked} mountOnEnter unmountOnExit>
+            <div className={classes.paper}>
+              <Welcome handleSlide={this.handleSlide} />
+            </div>
+          </Slide>
         </Modal>
       </div>
     )
@@ -43,10 +58,10 @@ const mapState = state => {
   }
 }
 
-WelcomeModal.propTypes = {
+ModalBegin.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const ScreensWelcomeModal = withStyles(styles)(WelcomeModal)
+const ScreensModalBegin = withStyles(styles)(ModalBegin)
 
-export default connect(mapState)(ScreensWelcomeModal)
+export default connect(mapState)(ScreensModalBegin)

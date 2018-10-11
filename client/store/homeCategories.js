@@ -348,7 +348,7 @@ export default function(state = initialState, action) {
     case DELETED_ONE_HOME_CATEGORIES:
       const removedState = {...state}
       action.homes.forEach(home => {
-        delete removedState[home.id][action.categoryId]
+        delete removedState.homeCategories[home.id][action.categoryId]
       })
       return {
         ...removedState,

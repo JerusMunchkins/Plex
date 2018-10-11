@@ -10,14 +10,14 @@ export const renderFuncSearch = type => ({
   getSuggestionItemProps,
   loading
 }) => {
-  const text = type === 'Home' ? 'Add Homes' : 'Add Places'
+  const text = type === 'Home' ? 'Add Homes...' : 'Add Places..'
   return (
     <div className="content-wrap">
       <TextField
         InputProps={{
           ...getInputProps({
             className: 'location-search-input',
-            style: {fontSize: '20px'}
+            style: {fontSize: '20px', backgroundColor: 'white'}
           })
         }}
         label={text}
@@ -45,7 +45,7 @@ export const renderFuncEdit = ({
       InputProps={{
         ...getInputProps({
           className: 'location-search-input',
-          style: {margin: '8px'}
+          style: {margin: '8px', backgroundColor: 'white'}
         })
       }}
       label="Address"
@@ -117,6 +117,13 @@ export const removeCountry = address => {
   return arr.slice(0, arr.length - 1).join(',')
 }
 
+export const styleSuggestions = suggestion => {
+  const arr = suggestion.split(', ')
+  const name = arr[0]
+  const address = arr.slice(1).join(', ')
+  return [name, address]
+}
+
 export const states = [
   '',
   'AL',
@@ -180,42 +187,30 @@ export const states = [
   'WY'
 ]
 
-export const getHomeRankings = (homeCategories, selectedCategories) => {
-  const categoryWeights = selectedCategories.reduce(
-    (weights, category, index) => {
-      const key = category.categoryId || category.placeId
-      weights[key] = {weight: index + 1}
-      return weights
-    },
-    {}
-  )
+export const getHomeRankings = (
+  homeCategories,
+  homePlaces,
+  selectedCategories
+) => {
   const homeKeys = Object.keys(homeCategories)
-  const categoryKeys = Object.keys(homeCategories[homeKeys[0]])
-  const [results, scores] = getScores()
-  const ranks = scores.reduce((final, score, index) => {
-    final[index] = Number(results[score])
-    return final
-  }, {})
-
-  return ranks
-
-  function getScores() {
-    const results = {}
-    const scores = []
-    for (let i = 0; i < homeKeys.length; i++) {
-      let key = 0
-      const homeId = homeKeys[i]
-      for (let j = 0; j < categoryKeys.length; j++) {
-        const catId = categoryKeys[j]
-        const {distanceValue} = homeCategories[homeId][catId]
-        const score = categoryWeights[catId].weight * distanceValue
-        key = key + score
-        scores[i] = (scores[i] || 0) + score
-      }
-      results[key] = homeId
+  const homeKeys2 = Object.keys(homePlaces)
+  const length = selectedCategories.length
+  const results = []
+  for (let i = 0; i < homeKeys.length; i++) {
+    const homeId = homeKeys[i]
+    for (let j = 0; j < length; j++) {
+      results[i] = {homeId: homeId}
+      const selected = selectedCategories[j]
+      const list = selected.categoryId ? homeCategories : homePlaces
+      const locationId = selected.categoryId
+        ? selected.categoryId
+        : selected.placeId
+      const {distanceValue} = list[homeId][locationId]
+      const score = selected.priority * distanceValue
+      results[i].score = (results[i].score || 0) + score
     }
-    return [results, scores.sort()]
   }
+  return results.sort((a, b) => a.score - b.score)
 }
 
 export const rankHomes = (homes, homeCategories, homePlaces, priorities) => {

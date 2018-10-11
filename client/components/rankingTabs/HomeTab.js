@@ -10,7 +10,7 @@ class HomeTab extends React.Component {
         <PlaceInfo homeId={this.props.homeId} />
       </div>
     ) : (
-      <h1>add a place</h1>
+      <h1>Add a place</h1>
     )
   }
 }

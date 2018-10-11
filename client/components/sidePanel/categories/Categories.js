@@ -1,7 +1,6 @@
 import React from 'react'
 import {withStyles} from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import ForwardIcon from '@material-ui/icons/Forward'
+import Typography from '@material-ui/core/Typography'
 import SelectedCategories from './SelectedCategories'
 import Menu from './Menu'
 
@@ -22,11 +21,14 @@ const Categories = props => {
     <div className="categories-display side-panel-body">
       <div className="content-wrap flex-container menu-buttons">
         <Menu />
-        <Button variant="outlined" color="primary" className={classes.button}>
-          Compare My Homes
-          <ForwardIcon className={classes.rightIcon} />
-        </Button>
       </div>
+      <Typography
+        style={{textAlign: 'center', marginTop: '12px'}}
+        variant="caption"
+        gutterBottom
+      >
+        Select and prioritize the types of locations that matter to you
+      </Typography>
       <SelectedCategories items={items} />
     </div>
   )

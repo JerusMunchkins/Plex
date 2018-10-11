@@ -1,13 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withStyles} from '@material-ui/core/styles'
-import {
-  Button,
-  TextField,
-  Select,
-  InputLabel,
-  FormControl
-} from '@material-ui/core/'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 import {getCenter} from '../../store'
 import {states} from '../../utilities'
 
@@ -39,9 +37,10 @@ class Welcome extends React.Component {
   }
 
   handleSubmit = e => {
+    const {handleSlide, getCenter} = this.props
     e.preventDefault()
+    handleSlide()
     const {city, state} = this.state
-    this.props.getCenter(city, state)
   }
 
   render() {
@@ -49,8 +48,7 @@ class Welcome extends React.Component {
     const {classes} = this.props
     return (
       <div className="form form-welcome">
-        <h1>Welcome to Loco</h1>
-        <h3>Make your move</h3>
+        <h2>Make your move</h2>
         <p>Enter the city of your next big move!</p>
         <div className="form-welcome">
           <div className="fields">

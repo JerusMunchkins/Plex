@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import {removeCountry} from '../../utilities'
 
 const styles = {
   card: {
@@ -27,9 +28,9 @@ const HomeCard = props => {
       <CardMedia className={classes.media} image={home.imgUrl} />
       <CardContent>
         <Typography gutterBottom variant="headline" component="h2">
-          {home.location.address}
+          {removeCountry(home.location.address)}
         </Typography>
-        <Typography variant="headline" component="h2">
+        <Typography variant="subheading" component="h2">
           <NumberFormat
             value={home.price}
             displayType="text"

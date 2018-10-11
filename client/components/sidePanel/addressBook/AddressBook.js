@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
 import HomeIcon from '@material-ui/icons/Home'
 import StarIcon from '@material-ui/icons/Star'
 import Autocomplete from './Autocomplete'
@@ -11,20 +12,10 @@ import {HomesList, PlacesList} from './List'
 import '../../../../secrets'
 
 const styles = theme => ({
-  round: {
-    height: '35px',
-    maxWidth: '35px',
-    left: '62px',
-    bottom: '6px',
-    opacity: '0.2',
-    borderRadius: '100px',
-    backgroundColor: 'white',
-    margin: '0 62px'
-  },
   label: {
     textTransform: 'capitalize'
   },
-  indicator: {backgroundColor: 'gray'}
+  indicator: {height: 0}
 })
 
 class AddressBook extends React.Component {
@@ -56,34 +47,46 @@ class AddressBook extends React.Component {
           >
             <Tabs
               classes={{indicator: classes.indicator}}
+              centered={true}
               value={value}
               onChange={this.handleChange}
             >
               <Tab disableRipple label="Homes" icon={<HomeIcon />} />
               <Tab disableRipple label="My Places" icon={<StarIcon />} />
             </Tabs>
+
+            <Autocomplete
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
+                process.env.GOOGLE_API_KEY
+              }&libraries=places`}
+              loadingElement={<div style={{height: `100%`}} />}
+              type={type}
+            />
           </AppBar>
         </div>
 
         <div className="addressbook-display side-panel-body">
-          <Autocomplete
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
-              process.env.GOOGLE_API_KEY
-            }&libraries=places`}
-            loadingElement={<div style={{height: `100%`}} />}
-            type={type}
-          />
           {value === 0 &&
             homes && (
               <HomesList>
-                <p>Add addresses</p>
+                <Typography
+                  style={{margin: '10px 5px 0 0'}}
+                  variant="subheading"
+                >
+                  You currently have nothing in your address book
+                </Typography>
               </HomesList>
             )}
           {value === 1 &&
             places && (
               <PlacesList>
                 <div>
-                  <p>Bookmark important locations</p>
+                  <Typography
+                    style={{margin: '10px 5px 0 0'}}
+                    variant="subheading"
+                  >
+                    Bookmark important locations
+                  </Typography>
                   <small>e.g. work, Mom's house, pet hospital</small>
                 </div>
               </PlacesList>

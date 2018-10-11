@@ -21,7 +21,8 @@ const styles = theme => ({
     width: '250px',
     display: 'flex',
     position: 'relative',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    color: '#ae8b00'
   },
   left: {
     position: 'absolute',

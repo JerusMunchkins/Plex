@@ -1,14 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Map} from '../../components'
-import ScreensWelcomeModal from '../modal/ModalWelcome'
+import ScreensWelcomeModal from '../modal/ModalBegin'
 import '../../../secrets'
 
 class ScreensMap extends React.Component {
   render() {
     return (
       <div id="map">
-        <ScreensWelcomeModal />
+        {/* <ScreensWelcomeModal /> */}
         <Map
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
             process.env.GOOGLE_API_KEY

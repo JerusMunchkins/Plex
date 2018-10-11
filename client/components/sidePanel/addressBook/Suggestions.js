@@ -1,15 +1,7 @@
 import React from 'react'
+import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
-import PropTypes from 'prop-types'
-import {withStyles} from '@material-ui/core/styles'
-
-const styles = theme => ({
-  root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
-  }
-})
+import {removeCountry, styleSuggestions} from '../../../utilities'
 
 class Suggestions extends React.Component {
   constructor(props) {
@@ -29,18 +21,32 @@ class Suggestions extends React.Component {
   }
 
   render() {
-    const {classes, suggestions, getSuggestionItemProps, loading} = this.props
+    const {suggestions, getSuggestionItemProps, loading} = this.props
     const {visible} = this.state
     return visible ? (
       <div className="autocomplete-dropdown-container">
-        <Paper className={classes.root} elevation={1}>
+        <Paper elevation={1}>
           {suggestions.map((suggestion, i) => {
+            const [name, address] = styleSuggestions(
+              removeCountry(suggestion.description)
+            )
+
             const className = suggestion.active
               ? 'suggestion-item--active'
               : 'suggestion-item'
             const style = suggestion.active
-              ? {backgroundColor: '#fafafa', cursor: 'pointer'}
-              : {backgroundColor: '#ffffff', cursor: 'pointer'}
+              ? {
+                  backgroundColor: '#ffffe8',
+                  cursor: 'pointer',
+                  padding: '8px 8px',
+                  zIndex: '3'
+                }
+              : {
+                  backgroundColor: '#ffffff',
+                  cursor: 'pointer',
+                  padding: '8px 8px',
+                  zIndex: '3'
+                }
             return (
               <div
                 key={i}
@@ -49,7 +55,18 @@ class Suggestions extends React.Component {
                   style
                 })}
               >
-                <span>{suggestion.description}</span>
+                <Typography
+                  style={{display: 'inline-block'}}
+                  variant="subheading"
+                >
+                  {name}
+                </Typography>
+                <Typography
+                  style={{display: 'inline-block', marginLeft: '5px'}}
+                  variant="caption"
+                >
+                  {address}
+                </Typography>
               </div>
             )
           })}
@@ -61,8 +78,4 @@ class Suggestions extends React.Component {
   }
 }
 
-Suggestions.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(Suggestions)
+export default Suggestions

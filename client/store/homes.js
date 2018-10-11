@@ -44,7 +44,9 @@ export const postHome = ({userId, address, lat, lng}) => async dispatch => {
 
     dispatch(fetchOneHomePlaces(userId, homeId))
     dispatch(fetchAllCategoryResultsOneHome(userId, homeId, {lat, lng}))
-    dispatch(gotHomes(homes))
+    await dispatch(gotHomes(homes))
+    // await Promise.all([
+    // ])
   } catch (err) {
     console.error('An error occurred while posting a new home')
   }
