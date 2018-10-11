@@ -9,8 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import StarIcon from '@material-ui/icons/Star'
 import {HomeTab} from '../'
-import {getBounds} from '../../store'
-import {getHomeRankings} from '../../utilities'
+import {getBounds, getRanks} from '../../store'
+import {rankHomes as ranker} from '../../utilities'
 
 const styles = theme => ({
   root: {
@@ -41,6 +41,7 @@ const styles = theme => ({
 })
 
 class RankingTabs extends React.Component {
+  // replace this ranking store
   state = {
     value: 0
   }
@@ -49,73 +50,82 @@ class RankingTabs extends React.Component {
     this.setState({value})
   }
 
-  getRankedHomeId = () => {
-    const {
-      homeCategories: {homeCategories},
-      homePlaces: {homePlaces},
-      selectedCategories
-    } = this.props
-    const homeCatKeys = Object.keys(homeCategories)
-    const homePlacesKeys = Object.keys(homePlaces)
-    const selectedCatKeys = Object.keys(selectedCategories)
-    const homeCatExists = homeCatKeys.length > 0
-    const selectedCatExists = selectedCatKeys.length > 0
-    const homePlacesExists = homePlacesKeys.length > 0
-    if (homeCatExists && selectedCatExists && homePlacesExists) {
-      return getHomeRankings(homeCategories, homePlaces, selectedCategories)
-    }
+  rankHomes = () => {
+    const {homes, homeCategories, homePlaces, selectedCategories} = this.props
+    const data = ranker(
+      homes,
+      homeCategories,
+      homePlaces,
+      selectedCategories.selectedCategories
+    )
+    return data
   }
 
   render() {
-    const {classes, homes, homeCategories, homePlaces} = this.props
+    const {
+      classes,
+      homes,
+      homeCategories,
+      homePlaces,
+      selectedCategories,
+      rankings
+    } = this.props
     const {value} = this.state
-    const rankings = this.getRankedHomeId()
+    // if (
+    //   !rankings.called &&
+    //   homeCategories.loaded &&
+    //   homePlaces.loaded &&
+    //   !selectedCategories.selectedCategoriesFetching
+    // ) {
+    //   const data = this.rankHomes(
+    //     homes,
+    //     homeCategories,
+    //     homePlaces,
+    //     selectedCategories.selectedCategories
+    //   )
+    //   this.props.getRanks(data)
+    // }
+
     return (
-      homeCategories.loaded &&
-      homePlaces.loaded && (
-        <div className={classes.root}>
-          <AppBar
-            position="relative"
-            color="default"
+      <div className={classes.root}>
+        <AppBar
+          position="relative"
+          color="default"
+          style={{
+            display: 'flex',
+            flexFlow: 'row',
+            backgroundColor: '#3f51b5'
+          }}
+        >
+          <Toolbar>
+            <StarIcon style={{color: 'yellow', fontSize: '36px'}} />
+            <Typography variant="display1" className={classes.header}>
+              Results
+            </Typography>
+          </Toolbar>
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
             style={{
-              display: 'flex',
-              flexFlow: 'row',
-              backgroundColor: '#3f51b5'
+              backgroundColor: '#3f51b5',
+              width: '100%',
+              margin: 'auto 0'
             }}
+            classes={{indicator: classes.indicator}}
           >
-            <Toolbar>
-              <StarIcon style={{color: 'yellow', fontSize: '36px'}} />
-              <Typography variant="display1" className={classes.header}>
-                Results
-              </Typography>
-            </Toolbar>
-            <Tabs
-              value={value}
-              onChange={this.handleChange}
-              style={{
-                backgroundColor: '#3f51b5',
-                width: '100%',
-                margin: 'auto 0'
-              }}
-              classes={{indicator: classes.indicator}}
-            >
-              {rankings &&
-                homes.map((home, i) => {
-                  const homeId = rankings[i].homeId
-                  return (
-                    <Tab
-                      disableRipple
-                      classes={{label: classes.label}}
-                      key={homeId}
-                      label={i + 1}
-                    />
-                  )
-                })}
-            </Tabs>
-          </AppBar>
-          {rankings && <HomeTab homeId={Number(rankings[value].homeId)} />}
-        </div>
-      )
+            {/* {rankings.data &&
+              homes.map((home, i) => {
+                const homeId = rankings.data[i]
+                return <Tab key={homeId} label={i + 1} />
+              })} */}
+            {homes.map((home, i) => {
+              return <Tab key={home.id} label={i + 1} />
+            })}
+          </Tabs>
+        </AppBar>
+        {/* {rankings.data && <HomeTab homeId={rankings.data[value]} />} */}
+        {homes[0] && <HomeTab homeId={homes[this.state.value].id} />}
+      </div>
     )
   }
 }
@@ -126,13 +136,15 @@ const mapState = state => {
     userId: state.user.id,
     markers: state.categoryResults,
     homeCategories: state.homeCategories,
-    selectedCategories: state.selectedCategories.selectedCategories,
-    homePlaces: state.homePlaces
+    selectedCategories: state.selectedCategories,
+    homePlaces: state.homePlaces,
+    rankings: state.rankings
   }
 }
 
 const mapDispatch = dispatch => ({
-  getBounds: (markers, homeLatLng) => dispatch(getBounds(markers, homeLatLng))
+  getBounds: (markers, homeLatLng) => dispatch(getBounds(markers, homeLatLng)),
+  getRanks: rankData => dispatch(getRanks(rankData))
 })
 
 RankingTabs.propTypes = {

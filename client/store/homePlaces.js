@@ -1,19 +1,15 @@
 import axios from 'axios'
 
 const FETCH_ALL_HOME_PLACES_SUCCESS = 'FETCH_ALL_HOME_PLACES_SUCCESS'
-// const FETCH_ONE_HOME_PLACES_SUCCESS = 'FETCH_ONE_HOME_PLACES_SUCCESS'
 const FETCH_HOME_PLACES_REQUEST = 'FETCH_HOME_PLACES_REQUEST'
 const FETCH_HOME_PLACES_ERROR = 'FETCH_HOME_PLACES_ERROR'
 const DELETED_HOME_IN_HOME_PLACES = 'DELETED_HOME_IN_HOME_PLACES'
+const DELETED_PLACE_IN_HOME_PLACES = 'DELETED_PLACE_IN_HOME_PLACES'
 
 const fetchAllHomePlacesSuccess = homePlaces => ({
   type: FETCH_ALL_HOME_PLACES_SUCCESS,
   homePlaces
 })
-// const fetchOneHomePlacesSuccess = homePlaces => ({
-//   type: FETCH_ONE_HOME_PLACES_SUCCESS,
-//   homePlaces
-// })
 const fetchHomePlacesRequest = () => ({
   type: FETCH_HOME_PLACES_REQUEST
 })
@@ -24,8 +20,13 @@ const deletedHomeInHomePlaces = homeId => ({
   type: DELETED_HOME_IN_HOME_PLACES,
   homeId
 })
+const deletedPlaceInHomePlaces = (placeId, homes) => ({
+  type: DELETED_PLACE_IN_HOME_PLACES,
+  placeId,
+  homes
+})
 
-// fetches all home_places for all homes on intial login
+// get all homePlaces for user upon login
 export const fetchAllHomePlaces = userId => async dispatch => {
   try {
     dispatch(fetchHomePlacesRequest())
@@ -70,6 +71,16 @@ export const fetchOneHomePlaces = (userId, homeId) => async dispatch => {
   }
 }
 
+// delete place for all homes (remove place)
+export const deletePlaceInHomePlaces = (placeId, homes) => dispatch => {
+  try {
+    dispatch(deletedPlaceInHomePlaces(placeId, homes))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// remove home from homePlaces (remove home)
 export const deleteHomeInHomePlaces = homeId => dispatch => {
   try {
     dispatch(deletedHomeInHomePlaces(homeId))
@@ -94,15 +105,16 @@ export default function(state = initialState, action) {
         fetchingCategoryResults: false,
         errorFetching: false
       }
-    // case FETCH_ONE_HOME_PLACES_SUCCESS:
-    //   return {...state}
-    // Phan: make sure you are updating the
-    // 'homePlaces' key in the 'homePlaces' store
-    // because I needed to make sure they are separated from the meta data keys
     case DELETED_HOME_IN_HOME_PLACES:
       const removedHomeState = {...state}
       delete removedHomeState.homePlaces[action.homeId]
       return removedHomeState
+    case DELETED_PLACE_IN_HOME_PLACES:
+      const removedPlaceState = {...state}
+      action.homes.forEach(home => {
+        delete removedPlaceState[home.id][action.placeId]
+      })
+      return removedPlaceState
     case FETCH_HOME_PLACES_REQUEST:
       return {
         ...state,

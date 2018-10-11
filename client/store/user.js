@@ -34,8 +34,8 @@ export const auth = (email, password, method) => async dispatch => {
     if (res.data.id) {
       dispatch(fetchPlaces(res.data.id))
       dispatch(fetchHomes(res.data.id))
-      await dispatch(fetchSelectedCategories(res.data.id))
-      dispatch(fetchAllHomePlaces(res.data.id))
+      dispatch(fetchSelectedCategories(res.data.id))
+      await dispatch(fetchAllHomePlaces(res.data.id))
     }
   } catch (authError) {
     return dispatch(getUser({error: authError}))

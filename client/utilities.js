@@ -205,13 +205,38 @@ export const getHomeRankings = (
       const locationId = selected.categoryId
         ? selected.categoryId
         : selected.placeId
-      console.log('List', list)
-      console.log('homeId', homeId)
-      console.log('locationId', locationId)
       const {distanceValue} = list[homeId][locationId]
       const score = selected.priority * distanceValue
       results[i].score = (results[i].score || 0) + score
     }
   }
   return results.sort((a, b) => a.score - b.score)
+}
+
+export const rankHomes = (homes, homeCategories, homePlaces, priorities) => {
+  const homeIdScores = {}
+
+  homes.forEach(home => {
+    let score = 0
+
+    priorities.forEach(item => {
+      if (item.placeId) {
+        score += homePlaces[home.id][item.placeId].distanceValue * item.priority
+      } else {
+        score +=
+          homeCategories[home.id][item.categoryId].distanceValue * item.priority
+      }
+    })
+
+    homeIdScores[score] = home.id
+  })
+
+  const sortedScores = Object.keys(homeIdScores).sort()
+
+  const rankings = {}
+  sortedScores.forEach((score, i) => {
+    rankings[i] = homeIdScores[score]
+  })
+  console.log('RAN RANK FUNCTION')
+  return rankings
 }

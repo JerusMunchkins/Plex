@@ -13,11 +13,12 @@ import categoryFilter from './categoryFilter'
 import homePlaces from './homePlaces'
 import categoryResults from './categoryResults'
 import homeCategories from './homeCategories'
-import priorities from './priorities'
+import rankings from './rankings'
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: ['rankings']
 }
 
 const reducer = combineReducers({
@@ -30,7 +31,7 @@ const reducer = combineReducers({
   homePlaces,
   categoryResults,
   homeCategories,
-  priorities
+  rankings
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
@@ -51,4 +52,4 @@ export * from './categoryFilter'
 export * from './homePlaces'
 export * from './categoryResults'
 export * from './homeCategories'
-export * from './priorities'
+export * from './rankings'

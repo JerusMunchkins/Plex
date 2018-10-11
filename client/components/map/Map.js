@@ -1,12 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {
-  withGoogleMap,
-  GoogleMap,
-  withScriptjs,
-  Marker,
-  InfoWindow
-} from 'react-google-maps'
+import {withGoogleMap, GoogleMap, withScriptjs} from 'react-google-maps'
+import MarkerInfo from './MarkerInfo'
 import {getBounds} from '../../store'
 import {flattenHomeCategoryResults} from '../../utilities'
 
@@ -45,11 +40,11 @@ class GMap extends React.Component {
       gym: 'http://maps.google.com/mapfiles/kml/pal2/icon57.png',
       laundry: 'http://maps.google.com/mapfiles/kml/pal4/icon12.png',
       pharmacy: 'http://maps.google.com/mapfiles/ms/micons/pharmacy-us.png',
-      library: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      library: 'http://maps.google.com/mapfiles/kml/pal3/icon27.png',
       church: 'http://maps.google.com/mapfiles/kml/pal2/icon11.png',
-      mosque: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
-      synagogue: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
-      hindu_temple: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
+      mosque: 'http://maps.google.com/mapfiles/kml/pal5/icon36.png',
+      synagogue: 'http://maps.google.com/mapfiles/kml/pal5/icon26.png',
+      hindu_temple: 'http://maps.google.com/mapfiles/kml/pal5/icon55.png',
       bus_station: 'http://maps.google.com/mapfiles/ms/micons/bus.png',
       train_station: 'http://maps.google.com/mapfiles/ms/micons/rail.png',
       subway_station: 'http://maps.google.com/mapfiles/ms/micons/subway.png'
@@ -115,31 +110,36 @@ class GMap extends React.Component {
       >
         {homes &&
           homes.map(marker => (
-            <Marker
+            <MarkerInfo
               icon={'http://maps.google.com/mapfiles/kml/pal3/icon56.png'}
               position={{lat: marker.location.lat, lng: marker.location.lng}}
-              // onClick={this.onMarkerClick}
+              image={marker.imgUrl}
+              name={marker.name}
+              address={marker.location.address}
+              price={marker.price}
               key={marker.id}
             />
           ))}
         {places.map(marker => (
-          <Marker
+          <MarkerInfo
             icon={'http://maps.google.com/mapfiles/kml/pal4/icon47.png'}
             position={{lat: marker.location.lat, lng: marker.location.lng}}
-            // onClick={this.onMarkerClick}
+            name={marker.name}
+            address={marker.location.address}
             key={marker.id}
           />
         ))}
 
         {locationsForMarkers &&
           locationsForMarkers.map(marker => (
-            <Marker
+            <MarkerInfo
               icon={this.returnCategoryIcon(marker.types)}
               position={{
                 lat: marker.geometry.location.lat,
                 lng: marker.geometry.location.lng
               }}
-              // onClick={this.onMarkerClick}
+              name={marker.name}
+              address={marker.vicinity}
               key={marker.id}
             />
           ))}

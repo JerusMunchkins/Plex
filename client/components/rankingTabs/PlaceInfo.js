@@ -41,18 +41,17 @@ const PlaceInfo = props => {
     priorities,
     categoryResults
   } = props
-  return homeCategories.loaded && categoryResults.loaded ? (
+  return homeCategories.loaded &&
+    categoryResults.loaded &&
+    homePlaces.loaded ? (
     <div className={classes.root}>
       {priorities.map(item => {
-        if (
-          !homeCategories.homeCategories[homeId][item.categoryId] &&
-          !item.placeId
-        ) {
+        if (!homeCategories[homeId][item.categoryId] && !item.placeId) {
           return
         }
         const name = item.placeId
           ? item.label
-          : `${homeCategories.homeCategories[homeId][item.categoryId].name}`
+          : `${homeCategories[homeId][item.categoryId].name}`
         const type = item.placeId
           ? 'My place'
           : `${item.label
@@ -60,8 +59,12 @@ const PlaceInfo = props => {
               .map(word => word[0].toUpperCase() + word.slice(1))
               .join(' ')}`
         const info = item.placeId
-          ? homePlaces.homePlaces[homeId][item.placeId]
-          : homeCategories.homeCategories[homeId][item.categoryId]
+          ? homePlaces[homeId][item.placeId]
+          : homeCategories[homeId][item.categoryId]
+
+        if (!info) {
+          return
+        }
         return (
           <ExpansionPanel key={item.priority} defaultExpanded={true}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

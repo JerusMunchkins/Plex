@@ -293,7 +293,6 @@ export const deleteHomeInHomeCategory = homeId => dispatch => {
 }
 
 const initialState = {
-  homeCategories: {},
   loaded: false,
   fetchingHomeCategories: false,
   errorFetching: false
@@ -303,7 +302,7 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case FETCH_ALL_HOME_CATEGORIES_SUCCESS:
       return {
-        homeCategories: action.homeCategories,
+        ...action.homeCategories,
         loaded: true,
         fetchingHomeCategories: false,
         errorFetching: false
@@ -312,7 +311,7 @@ export default function(state = initialState, action) {
       const newState = {...state}
       const homeIds = Object.keys(action.homeCategories)
       homeIds.forEach(homeId => {
-        newState.homeCategories[homeId][+action.categoryId] =
+        newState[homeId][+action.categoryId] =
           action.homeCategories[homeId][+action.categoryId]
       })
       return {
@@ -323,18 +322,15 @@ export default function(state = initialState, action) {
       }
     case FETCH_ALL_HOME_CATEGORIES_ONE_HOME_SUCCESS:
       return {
-        // ...state,
-        homeCategories: {
-          ...state.homeCategories,
-          [action.homeId]: action.homeCategories
-        },
+        ...state,
+        [action.homeId]: action.homeCategories,
         loaded: true,
         fetchingHomeCategories: false,
         errorFetching: false
       }
     case DELETED_HOME_IN_HOME_CATEGORIES:
       const removedHomeState = {...state}
-      delete removedHomeState.homeCategories[action.homeId]
+      delete removedHomeState[action.homeId]
       return removedHomeState
     case FETCH_HOME_CATEGORIES_REQUEST:
       return {
