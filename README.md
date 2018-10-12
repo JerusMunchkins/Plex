@@ -34,7 +34,7 @@ Loco makes moving easier by ranking a list of prospective homes according to the
 * [**Jeru Kim**](https://github.com/jerukim) - Developer
 * [**Phan Le**](https://github.com/codaboba) - Developer
 * [**Tomas Mariani**](https://github.com/tomasgnr) - Developer
-  [**Fullstack Academy**](https://github.com/FullstackAcademy) - Boilerplate
+* [**Fullstack Academy**](https://github.com/FullstackAcademy) - Boilerplate
 
 # Acknowledgements
 
