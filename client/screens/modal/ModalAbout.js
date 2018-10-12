@@ -90,15 +90,6 @@ class ModalAbout extends React.Component {
                           <div className="li-item">
                             <Button
                               variant="contained"
-                              color="secondary"
-                              href="/auth/google"
-                            >
-                              Sign up with Google
-                            </Button>
-                          </div>
-                          <div className="li-item">
-                            <Button
-                              variant="contained"
                               style={{width: '100%'}}
                               onClick={() => this.handleClick('login')}
                             >
@@ -108,15 +99,6 @@ class ModalAbout extends React.Component {
                         </div>
                       ) : (
                         <div className="about-buttons welcome-col">
-                          <div className="li-item">
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              href="/auth/google"
-                            >
-                              Log in with Google
-                            </Button>
-                          </div>
                           <div className="li-item">
                             <Button
                               variant="contained"
