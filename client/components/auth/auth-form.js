@@ -33,16 +33,28 @@ class AuthForm extends React.Component {
   render() {
     const {name, displayName, handleSubmit, error} = this.props
     return (
-      <div className="welcome-col">
+      <div className="flex-container auth-wrap">
         <form onSubmit={handleSubmit} name={name} className="auth-form">
           {name === 'signup' && (
-            <TextField
-              onChange={this.handleChange('first')}
-              id="first"
-              value={this.state.first}
-              label="First Name"
-              margin="normal"
-            />
+            <div>
+              <Typography
+                style={{
+                  color: 'gray',
+                  textAlign: 'center'
+                }}
+                variant="title"
+                gutterBottom
+              >
+                Create an account
+              </Typography>
+              <TextField
+                onChange={this.handleChange('first')}
+                id="first"
+                value={this.state.first}
+                label="First Name"
+                margin="normal"
+              />
+            </div>
           )}
           {name === 'signup' && (
             <TextField
@@ -108,6 +120,33 @@ class AuthForm extends React.Component {
             >
               {displayName} with Google
             </Button>
+          )}
+          <div className="divider" />
+
+          {displayName === 'signup' ? (
+            <div className="about-buttons">
+              <div className="li-item">
+                <Button
+                  variant="contained"
+                  style={{width: '100%'}}
+                  onClick={() => this.handleClick('login')}
+                >
+                  Login
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="about-buttons welcome-col">
+              <div className="li-item">
+                <Button
+                  variant="contained"
+                  style={{width: '100%'}}
+                  onClick={() => this.handleClick('signup')}
+                >
+                  Signup
+                </Button>
+              </div>
+            </div>
           )}
           {error && error.response && <div> {error.response.data} </div>}
         </form>

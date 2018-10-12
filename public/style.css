@@ -225,13 +225,15 @@ label {
   justify-content: space-around;
 }
 
-.welcome-col {
-  margin-right: 25px;
+.auth-wrap {
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .auth-form {
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
+  width: 80%;
 }
 
 .divider {
@@ -243,6 +245,13 @@ label {
   transform: translate(0, 8%);
   top: 50%;
   margin: 0 0;
+}
+
+.about-option {
+  padding: 25px 0;
+  border-radius: 10px;
+  border: 1px solid #cfcfcf;
+  box-shadow: 1px 5px 15px #efefef;
 }
 
 .search-wrap {
