@@ -5,11 +5,13 @@ import {
   ScreensRankingTabs,
   ScreensSidePanel
 } from './screens'
+import {TipButton} from './components'
 import Routes from './routes'
 
 const App = () => {
   return (
     <div id="main">
+      <TipButton />
       <ScreensNavbar />
       <div id="top">
         <ScreensSidePanel />

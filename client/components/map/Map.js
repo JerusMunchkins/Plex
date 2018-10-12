@@ -7,7 +7,7 @@ import {flattenHomeCategoryResults} from '../../utilities'
 
 class GMap extends React.Component {
   componentDidUpdate = async prevProps => {
-    const {userId, homes, places, center, homeId, categoryResults} = this.props
+    const {userId, homes, places, homeId, categoryResults} = this.props
     const homeDeleted = homes.length < prevProps.homes.length
     const placeDeleted = places.length < prevProps.places.length
     let bounds
@@ -26,34 +26,30 @@ class GMap extends React.Component {
       }
       this.refs.map.fitBounds(bounds)
     } catch (err) {
-      console.error(
-        'An error occurred in Google maps --- map working, review bug later'
-      )
+      console.error('An error occurred in Google maps')
     }
   }
 
   // Assigns the right icon depending on the category
   returnCategoryIcon = function(arr) {
     let categories = {
-      supermarket: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png',
-      gym: 'http://maps.google.com/mapfiles/kml/pal2/icon57.png',
-      laundry: 'http://maps.google.com/mapfiles/kml/pal4/icon12.png',
-      pharmacy: 'http://maps.google.com/mapfiles/ms/micons/pharmacy-us.png',
-      library: 'http://maps.google.com/mapfiles/kml/pal3/icon27.png',
-      church: 'http://maps.google.com/mapfiles/kml/pal2/icon11.png',
-      mosque: 'http://maps.google.com/mapfiles/kml/pal5/icon36.png',
-      synagogue: 'http://maps.google.com/mapfiles/kml/pal5/icon26.png',
-      hindu_temple: 'http://maps.google.com/mapfiles/kml/pal5/icon55.png',
-      bus_station: 'http://maps.google.com/mapfiles/ms/micons/bus.png',
-      train_station: 'http://maps.google.com/mapfiles/ms/micons/rail.png',
-      subway_station: 'http://maps.google.com/mapfiles/ms/micons/subway.png'
+      supermarket: 'icons/carrot.png',
+      gym: 'icons/dumbbell.png',
+      laundry: 'icons/washing-machine.png',
+      pharmacy: 'icons/medicine.png',
+      library: 'icons/book.png',
+      church: 'icons/church.png',
+      mosque: 'icons/mosque.png',
+      synagogue: 'icons/synagogue.png',
+      hindu_temple: 'icons/temple.png',
+      bus_station: 'icons/bus-stop.png',
+      train_station: 'icons/train.png',
+      subway_station: 'icons/metro.png'
     }
 
     for (let i = 0; arr.length; i++) {
       if (Object.keys(categories).includes(arr[i])) {
         return categories[arr[i]]
-      } else {
-        return 'http://maps.google.com/mapfiles/kml/pal3/icon26.png'
       }
     }
   }
@@ -110,7 +106,7 @@ class GMap extends React.Component {
         {homes &&
           homes.map(marker => (
             <MarkerInfo
-              icon={'http://maps.google.com/mapfiles/kml/pal3/icon56.png'}
+              icon={'icons/house.png'}
               position={{lat: marker.location.lat, lng: marker.location.lng}}
               image={marker.imgUrl}
               name={marker.name}
@@ -121,14 +117,13 @@ class GMap extends React.Component {
           ))}
         {places.map(marker => (
           <MarkerInfo
-            icon={'http://maps.google.com/mapfiles/kml/pal4/icon47.png'}
+            icon={'icons/star.png'}
             position={{lat: marker.location.lat, lng: marker.location.lng}}
             name={marker.name}
             address={marker.location.address}
             key={marker.id}
           />
         ))}
-        {('locationsForMarkers', console.log(locationsForMarkers))}
         {locationsForMarkers &&
           locationsForMarkers.map(marker => (
             <MarkerInfo

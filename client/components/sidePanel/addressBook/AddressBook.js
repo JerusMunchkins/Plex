@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import HomeIcon from '@material-ui/icons/Home'
 import StarIcon from '@material-ui/icons/Star'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Autocomplete from './Autocomplete'
 import {HomesList, PlacesList} from './List'
 import '../../../../secrets'
@@ -15,7 +16,9 @@ const styles = theme => ({
   label: {
     textTransform: 'capitalize'
   },
-  indicator: {height: 0}
+  indicator: {
+    height: 0
+  }
 })
 
 class AddressBook extends React.Component {
@@ -36,17 +39,16 @@ class AddressBook extends React.Component {
 
   render() {
     const {value} = this.state
-    const {classes, homes, places} = this.props
+    const {classes, homes, places, fetching} = this.props
     const type = value === 0 ? 'Home' : 'Place'
     return (
       <div>
         <div className="addressbook-select">
-          <AppBar
-            position="static"
-            style={{backgroundColor: '#f1f1f1', color: 'black'}}
-          >
+          <AppBar position="static" style={{backgroundColor: '#f1f1f1'}}>
             <Tabs
               classes={{indicator: classes.indicator}}
+              indicatorColor="secondary"
+              textColor="secondary"
               centered={true}
               value={value}
               onChange={this.handleChange}
@@ -91,6 +93,14 @@ class AddressBook extends React.Component {
                 </div>
               </PlacesList>
             )}
+          {fetching && (
+            <div className="flex-container menu-buttons">
+              <CircularProgress
+                className={classes.progress}
+                color="secondary"
+              />
+            </div>
+          )}
         </div>
       </div>
     )
@@ -100,7 +110,8 @@ class AddressBook extends React.Component {
 const mapStateToProps = state => ({
   userId: state.user.id,
   homes: state.homes,
-  places: state.places
+  places: state.places,
+  fetching: state.homeCategories.fetchingHomeResults
 })
 
 export default connect(mapStateToProps)(withStyles(styles)(AddressBook))

@@ -18,6 +18,7 @@ class MarkerInfo extends React.Component {
         icon={icon}
         position={{lat: position.lat, lng: position.lng}}
         onClick={this.onMarkerClick}
+        style={{width: '30px', height: '30px'}}
       >
         {this.state.isOpen && (
           <InfoWindow

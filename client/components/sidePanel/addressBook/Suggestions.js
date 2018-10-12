@@ -21,7 +21,7 @@ class Suggestions extends React.Component {
   }
 
   render() {
-    const {suggestions, getSuggestionItemProps, loading} = this.props
+    const {suggestions, getSuggestionItemProps} = this.props
     const {visible} = this.state
     return visible ? (
       <div className="autocomplete-dropdown-container">
@@ -36,7 +36,7 @@ class Suggestions extends React.Component {
               : 'suggestion-item'
             const style = suggestion.active
               ? {
-                  backgroundColor: '#ffffe8',
+                  backgroundColor: '#f9f9ff',
                   cursor: 'pointer',
                   padding: '8px 8px',
                   zIndex: '3'

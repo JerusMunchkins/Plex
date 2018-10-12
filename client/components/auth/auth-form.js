@@ -125,7 +125,6 @@ const mapSignup = state => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const {history, handleSlide} = ownProps
-  console.log('ownprops', ownProps)
   return {
     handleSubmit(evt) {
       evt.preventDefault()

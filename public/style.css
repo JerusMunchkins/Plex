@@ -50,6 +50,19 @@ label {
   font-weight: bold;
 }
 
+.tips {
+  position: absolute;
+  right: 9px;
+  top: 80px;
+  background-color: rgb(247, 189, 0);
+  z-index: 1;
+  border-radius: 15px;
+}
+
+.show-tips {
+  margin: 0;
+}
+
 .form-welcome {
   margin: 0.5em;
   display: inline-block;
@@ -270,4 +283,9 @@ label {
 
 .bold {
   font-weight: 500;
+}
+
+.duration-group {
+  position: absolute;
+  left: 35vw;
 }
