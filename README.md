@@ -1,4 +1,6 @@
-#LOCO
+# LOCO
+
+![Image of Loco logo](/public/logo.png)
 
 Loco makes moving easier by ranking a list of prospective homes according to their distances to nearby points of interest.
 
