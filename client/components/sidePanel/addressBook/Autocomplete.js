@@ -16,8 +16,7 @@ const styles = theme => ({
     width: '20px',
     height: '20px',
     minHeight: '38px',
-    minWidth: '38px',
-    backgroundColor: '#ff595e'
+    minWidth: '38px'
   }
 })
 
@@ -54,6 +53,7 @@ class Autocomplete extends React.Component {
         lng,
         homesIdList
       })
+      this.setState({address: ''})
     } catch (err) {
       console.error(err)
     }
@@ -77,10 +77,11 @@ class Autocomplete extends React.Component {
         </PlacesAutocomplete>
         <Button
           variant="fab"
-          color="primary"
+          color="secondary"
           aria-label="Add"
           size="small"
           className={classes.button}
+          disabled={this.state.address ? false : true}
           onClick={this.handleClick}
         >
           <AddIcon />

@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import NumberFormat from 'react-number-format'
 import {withStyles} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
@@ -81,26 +81,31 @@ class HomeForm extends React.Component {
         >
           {renderFuncEdit}
         </PlacesAutocomplete>
-        <NumberFormat
-          inputRef={elem => (this.elem = elem)}
-          customInput={NumberField}
-          thousandSeparator={true}
-          allowNegative={false}
-          decimalScale={0}
-          classes={classes}
-          price={price}
-          handleChange={this.handleChange}
+        <TextField
+          label="Price"
+          value={price}
+          className={classes.textField}
+          placeholder="0"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+            inputComponent: NumberField
+          }}
+          onChange={this.handleChange('price')}
         />
         <TextField
           label="URL"
           helperText="Add a hyperlink to your home listing"
           value={link}
           className={classes.textField}
-          InputProps={{className: classes.input}}
+          InputProps={{
+            className: classes.input
+          }}
           onChange={this.handleChange('link')}
         />
         <div className="flex-container flex-end">
-          <Button type="submit">Save</Button>
+          <Button color="primary" variant="contained" type="submit">
+            Save
+          </Button>
         </div>
       </form>
     )
