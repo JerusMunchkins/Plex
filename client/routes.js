@@ -31,7 +31,13 @@ class Routes extends Component {
         />
         <Route
           path="/home"
-          render={() => !this.props.center && <ScreensBegin />}
+          render={() =>
+            this.props.center ? (
+              <Redirect to="/welcome" />
+            ) : (
+              <Redirect to="/home" />
+            )
+          }
         />
         <Route path="/about" component={ScreensAbout} />
         <Route path="/begin" component={ScreensBegin} />
