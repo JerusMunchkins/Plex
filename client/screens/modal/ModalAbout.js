@@ -6,7 +6,8 @@ import Modal from '@material-ui/core/Modal'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Slide from '@material-ui/core/Slide'
-import {Login, Signup} from '../../components'
+import {Login, Signup, Welcome} from '../../components'
+import Paper from '@material-ui/core/Paper'
 
 const styles = theme => ({
   paper: {
@@ -68,65 +69,27 @@ class ModalAbout extends React.Component {
                 </Typography>
                 {pathname === '/welcome' && (
                   <div>
-                    <Typography
-                      style={{color: 'gray', marginTop: '35px'}}
-                      variant="title"
-                      gutterBottom
-                    >
-                      Get Started
-                    </Typography>
+                    <Typography variant="display2">Get Started</Typography>
+                    <div className="about-option">
+                      <Typography
+                        style={{
+                          color: 'gray',
+                          textAlign: 'center'
+                        }}
+                        variant="title"
+                        gutterBottom
+                      >
+                        Enter the city of your next move
+                      </Typography>
 
-                    <div className="flex-container welcome-modal">
+                      <Welcome />
+                    </div>
+
+                    <div className="about-option">
                       {this.state.auth === 'login' ? (
                         <Login handleSlide={this.handleSlide} />
                       ) : (
                         <Signup handleSlide={this.handleSlide} />
-                      )}
-
-                      <div className="divider" />
-
-                      {this.state.auth === 'signup' ? (
-                        <div className="about-buttons welcome-col">
-                          <div className="li-item">
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              href="/auth/google"
-                            >
-                              Sign up with Google
-                            </Button>
-                          </div>
-                          <div className="li-item">
-                            <Button
-                              variant="contained"
-                              style={{width: '100%'}}
-                              onClick={() => this.handleClick('login')}
-                            >
-                              Login
-                            </Button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="about-buttons welcome-col">
-                          <div className="li-item">
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              href="/auth/google"
-                            >
-                              Log in with Google
-                            </Button>
-                          </div>
-                          <div className="li-item">
-                            <Button
-                              variant="contained"
-                              style={{width: '100%'}}
-                              onClick={() => this.handleClick('signup')}
-                            >
-                              Signup
-                            </Button>
-                          </div>
-                        </div>
                       )}
                     </div>
                   </div>
