@@ -65,20 +65,22 @@ label {
   margin: 0;
 }
 
-.form-welcome {
-  margin: 0.5em;
-  display: inline-block;
-}
-
 .welcome-modal {
   justify-content: space-evenly;
   padding-bottom: 15px;
   position: relative;
 }
 
+.form-welcome {
+  display: inline-block;
+  width: 100%;
+}
+
 .fields {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
+  margin: 0 18%;
 }
 
 #main {
@@ -252,6 +254,7 @@ label {
   border-radius: 10px;
   border: 1px solid #cfcfcf;
   box-shadow: 1px 5px 15px #efefef;
+  margin: 20px 0;
 }
 
 .search-wrap {
@@ -306,4 +309,11 @@ label {
   top: 6px;
   left: 261px;
   border-radius: 100px;
+}
+
+hr {
+  display: block;
+  margin: 17px 80px 10px 80px;
+  border: solid 2px #d8d5d5;
+  border-width: 1px;
 }

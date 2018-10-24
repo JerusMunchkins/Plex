@@ -75,11 +75,11 @@ class Welcome extends React.Component {
                 ))}
               </Select>
             </FormControl>
+            <Button variant="contained" onClick={this.handleSubmit}>
+              Go
+            </Button>
           </div>
         </div>
-        <Button variant="contained" onClick={this.handleSubmit}>
-          Go
-        </Button>
       </div>
     )
   }

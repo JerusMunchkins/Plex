@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Typography from '@material-ui/core/Typography'
 
 class AuthForm extends React.Component {
   constructor() {
@@ -53,17 +54,17 @@ class AuthForm extends React.Component {
                 value={this.state.first}
                 label="First Name"
                 margin="normal"
+                style={{width: '100%'}}
+              />
+              <TextField
+                onChange={this.handleChange('last')}
+                id="last"
+                value={this.state.last}
+                label="Last Name"
+                margin="normal"
+                style={{width: '100%'}}
               />
             </div>
-          )}
-          {name === 'signup' && (
-            <TextField
-              onChange={this.handleChange('last')}
-              id="last"
-              value={this.state.last}
-              label="Last Name"
-              margin="normal"
-            />
           )}
           <TextField
             onChange={this.handleChange('email')}
@@ -122,6 +123,8 @@ class AuthForm extends React.Component {
             </Button>
           )}
           <div className="divider" />
+
+          <hr />
 
           {displayName === 'signup' ? (
             <div className="about-buttons">
