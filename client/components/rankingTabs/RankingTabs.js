@@ -84,37 +84,49 @@ class RankingTabs extends React.Component {
             className="tab"
             style={{
               backgroundColor: '#3f51b5',
-              borderTopRightRadius: '40px',
-              borderTopLeftRadius: '40px',
-              height: '40px',
-              marginTop: '-64px'
+              borderTopRightRadius: '5px',
+              borderTopLeftRadius: '5px',
+              marginTop: '-40px',
+              minHeight: 0
             }}
           >
             <StarIcon
-              style={{color: '#ffba00', fontSize: '24px', marginLeft: '9px'}}
+              style={{
+                color: '#ffba00',
+                fontSize: '24px',
+                marginLeft: '34px'
+              }}
             />
             <Typography variant="display1" className={classes.header}>
               Results
             </Typography>
           </Toolbar>
-          {Object.keys(rankings.data).length > 0 &&
-            sort(Object.keys(rankings.data)).map((homeKey, i) => {
-              const home = homes.filter(
-                home => home.id === rankings.data[homeKey]
-              )
+          <ul className="tabs-list">
+            {Object.keys(rankings.data).length > 0 &&
+              sort(Object.keys(rankings.data)).map((homeKey, i) => {
+                const home = homes.filter(
+                  home => home.id === rankings.data[homeKey]
+                )
 
-              const color = i % 2 === 0 ? 'light-blue' : 'blue'
-              const selected = value === i ? 'selected' : ''
-              return (
-                <li
-                  key={home[0].id}
-                  className={`tab result ${color} ${selected}`}
-                  onClick={() => this.setState({value: i})}
-                >
-                  {home[0].location.address.slice(0, 18).concat('...')}
-                </li>
-              )
-            })}
+                const selected = value === i ? 'selected' : ''
+                return (
+                  <li
+                    key={home[0].id}
+                    className={`tab result light-blue ${selected}`}
+                    onClick={() => this.setState({value: i})}
+                  >
+                    <a
+                      href="#"
+                      onClick={event => {
+                        event.preventDefault()
+                      }}
+                    >
+                      {home[0].location.address.slice(0, 18).concat('...')}
+                    </a>
+                  </li>
+                )
+              })}
+          </ul>
         </div>
         {rankings.data && (
           <HomeTab rank={value + 1} homeId={rankings.data[value]} />

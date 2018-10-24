@@ -3,10 +3,6 @@ body {
   margin: 0;
 }
 
-a {
-  text-decoration: none;
-}
-
 label {
   display: block;
 }
@@ -83,6 +79,12 @@ label {
   margin: 0 18%;
 }
 
+.duration-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 #main {
   display: flex;
   flex-wrap: wrap;
@@ -126,37 +128,52 @@ label {
   position: absolute;
 }
 
+.tabs-list {
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: -40px;
+  padding: 0;
+}
+
 .tab {
   display: inline-block;
-  border-top-right-radius: 68px;
-  border-top-left-radius: 68px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
   min-width: 175px;
   font-size: 12px;
-  margin-left: -15px;
+  margin-left: 3px;
   line-height: 42px;
   color: white;
   text-align: center;
   height: 40px;
-  margin-top: -40px;
-}
-
-.blue {
-  background-color: #3f51b5;
+  border: solid 1px #d2d2d2;
+  border-bottom: solid 1px #fcfcfc;
 }
 
 .light-blue {
   background-color: #707eca;
 }
 
-.result {
-  z-index: 1;
-}
-.overlap {
-  z-index: 2;
-}
-
 .selected {
   z-index: 3;
+  background-color: #fcfcfc;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.selected a {
+  color: black;
+}
+
+.result {
+  z-index: 1;
 }
 
 .flex-container {
