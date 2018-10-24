@@ -44,4 +44,4 @@ Loco makes moving easier by ranking a list of prospective homes according to the
 
 # Link to Demo
 
-Coming soon
+https://youtu.be/X4KFPRWdahk
