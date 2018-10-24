@@ -13,7 +13,7 @@ const locationData = [
   {
     lat: 41.9171507,
     lng: -87.647284,
-    address: '1932 N Burling Street, Chicago, IL 60614, USA'
+    address: '1932 N Burling St, Chicago, IL 60614, USA'
   },
   {
     lat: 41.8983855,
