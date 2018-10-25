@@ -76,7 +76,6 @@ class Autocomplete extends React.Component {
           this.setState({address: ''})
         })
         .then(() => {
-          console.log('GOT TO THEN')
           const data = this.rankHomes(
             homes,
             homeCategories,

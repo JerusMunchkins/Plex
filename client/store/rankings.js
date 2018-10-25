@@ -27,9 +27,13 @@ export const updateRanks = () => async dispatch => {
     console.error(err)
   }
 }
-export const deleteRanks = () => async dispatch => {
+export const deleteRanks = homeId => async (dispatch, getState) => {
   try {
-    dispatch(deletedRanks())
+    const state = getState()
+    const rankings = state.rankings.data
+    const homeKey = Object.keys(rankings).find(key => rankings[key] === homeId)
+    delete rankings[homeKey]
+    dispatch(gotRanks(rankings))
   } catch (err) {
     console.error(err)
   }
