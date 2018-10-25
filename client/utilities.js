@@ -212,6 +212,5 @@ export const rankHomes = (homes, homeCategories, homePlaces, priorities) => {
     rankings[i] = homeIdScores[score]
   })
 
-  console.log('RANKED HOMES UTIL')
   return rankings
 }

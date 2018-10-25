@@ -99,22 +99,22 @@ class RankingTabs extends React.Component {
           </Toolbar>
           {Object.keys(rankings.data).length > 0 &&
             sort(Object.keys(rankings.data)).map((homeKey, i) => {
-              const home = homes.filter(
+              const home = homes.find(
                 home => home.id === rankings.data[homeKey]
               )
 
               const color = i % 2 === 0 ? 'light-blue' : 'blue'
               const selected = value === i ? 'selected' : ''
 
-              if (!home[0]) return
+              if (!home) return
 
               return (
                 <li
-                  key={home[0].id}
+                  key={home.id}
                   className={`tab result ${color} ${selected}`}
                   onClick={() => this.setState({value: i})}
                 >
-                  {home[0].location.address.slice(0, 18).concat('...')}
+                  {home.location.address.slice(0, 18).concat('...')}
                 </li>
               )
             })}
