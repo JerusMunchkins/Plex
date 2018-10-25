@@ -109,6 +109,9 @@ class RankingTabs extends React.Component {
                 )
 
                 const selected = value === i ? 'selected' : ''
+
+                if (!home[0]) return
+
                 return (
                   <li
                     key={home[0].id}
