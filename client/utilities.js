@@ -211,5 +211,7 @@ export const rankHomes = (homes, homeCategories, homePlaces, priorities) => {
   sortedScores.forEach((score, i) => {
     rankings[i] = homeIdScores[score]
   })
+
+  console.log('RANKED HOMES UTIL')
   return rankings
 }

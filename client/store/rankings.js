@@ -15,6 +15,7 @@ const deletedRanks = () => ({
 
 export const getRanks = rankData => async dispatch => {
   try {
+    console.log('RANK DATA THUNK')
     dispatch(gotRanks(rankData))
   } catch (err) {
     console.error(err)
