@@ -4,7 +4,6 @@ import {
   fetchOneHomePlaces,
   fetchAllCategoryResultsOneHome
 } from './index'
-import {getStreetViewUrl} from '../../server/services'
 
 const GOT_HOMES = 'GOT_HOMES'
 const REMOVE_HOMES = 'REMOVE_HOMES'

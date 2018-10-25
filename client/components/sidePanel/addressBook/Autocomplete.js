@@ -84,10 +84,6 @@ class Autocomplete extends React.Component {
           )
           this.props.getRanks(data)
         })
-
-      // if (type === 'Home') {
-
-      // }
     } catch (err) {
       console.error(err)
     }

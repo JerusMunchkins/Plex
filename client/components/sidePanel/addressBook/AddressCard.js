@@ -22,7 +22,8 @@ import {
   deleteHomeInHomeCategory,
   deletePlaceInHomePlaces,
   fetchSelectedCategories,
-  deleteRanks
+  deleteRanks,
+  updateRanks
 } from '../../../store'
 
 const styles = theme => ({
@@ -78,7 +79,8 @@ class AddressCard extends React.Component {
       const {id: placeId} = this.props.place
       await this.props.deletePlace({userId, placeId})
       await this.props.deletePlaceInHomePlaces(placeId, homes)
-      this.props.fetchSelectedCategories(userId)
+      await this.props.fetchSelectedCategories(userId)
+      this.props.updateRanks()
     }
   }
 
@@ -144,7 +146,8 @@ const mapDispatchToProps = dispatch => ({
   deletePlaceInHomePlaces: (placeId, homes) =>
     dispatch(deletePlaceInHomePlaces(placeId, homes)),
   fetchSelectedCategories: userId => dispatch(fetchSelectedCategories(userId)),
-  deleteRanks: homeId => dispatch(deleteRanks(homeId))
+  deleteRanks: homeId => dispatch(deleteRanks(homeId)),
+  updateRanks: () => dispatch(updateRanks())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

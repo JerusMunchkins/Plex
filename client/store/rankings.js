@@ -1,3 +1,5 @@
+import {rankHomes} from '../utilities'
+
 const GOT_RANKS = 'GET_RANKS'
 const UPDATED_RANKS = 'GET_RANKS'
 const DELETED_RANKS = 'DELETE_RANKS'
@@ -6,28 +8,34 @@ const gotRanks = rankData => ({
   type: GOT_RANKS,
   rankData
 })
-const updatedRanks = () => ({
-  type: UPDATED_RANKS
-})
-const deletedRanks = () => ({
-  type: DELETED_RANKS
+const updatedRanks = rankData => ({
+  type: UPDATED_RANKS,
+  rankData
 })
 
-export const getRanks = rankData => async dispatch => {
+export const getRanks = rankData => dispatch => {
   try {
     dispatch(gotRanks(rankData))
   } catch (err) {
     console.error(err)
   }
 }
-export const updateRanks = () => async dispatch => {
+export const updateRanks = () => (dispatch, getState) => {
   try {
-    dispatch(updatedRanks())
+    const state = getState()
+    const {homes, homeCategories, homePlaces, selectedCategories} = state
+    const rankData = rankHomes(
+      homes,
+      homeCategories,
+      homePlaces,
+      selectedCategories.selectedCategories
+    )
+    dispatch(updatedRanks(rankData))
   } catch (err) {
     console.error(err)
   }
 }
-export const deleteRanks = homeId => async (dispatch, getState) => {
+export const deleteRanks = homeId => (dispatch, getState) => {
   try {
     const state = getState()
     const rankings = state.rankings.data
@@ -54,7 +62,7 @@ export default function(state = initialState, action) {
     case UPDATED_RANKS:
       return {
         ...state,
-        called: false
+        data: {...action.rankData}
       }
     case DELETED_RANKS:
       return
