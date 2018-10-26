@@ -37,10 +37,10 @@ class Welcome extends React.Component {
   }
 
   handleSubmit = e => {
-    const {handleSlide, getCenter} = this.props
     e.preventDefault()
-    handleSlide()
+    const {handleSlide, getCenter} = this.props
     const {city, state} = this.state
+    getCenter(city, state)
   }
 
   render() {
