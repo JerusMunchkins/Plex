@@ -93,21 +93,21 @@ const PlaceInfo = props => {
                 </div>
                 <div className="flex-container duration-group">
                   <div
-                    className="flex-container fields duration-wrapper"
+                    className="flex-container duration-icon duration-wrapper"
                     style={{marginLeft: '18px'}}
                   >
                     <DirectionsCar className={classes.icon} />
                     <Typography>{info.drivingText}</Typography>
                   </div>
-                  <div className="flex-container fields duration-wrapper">
+                  <div className="flex-container duration-icon duration-wrapper">
                     <DirectionsTransit className={classes.icon} />
                     <Typography>{info.transitText}</Typography>
                   </div>
-                  <div className="flex-container fields duration-wrapper">
+                  <div className="flex-container duration-icon duration-wrapper">
                     <DirectionsBike className={classes.icon} />
                     <Typography>{info.bicyclingText}</Typography>
                   </div>
-                  <div className="flex-container fields duration-wrapper">
+                  <div className="flex-container duration-icon duration-wrapper">
                     <DirectionsWalk className={classes.icon} />
                     <Typography>{info.walkingText}</Typography>
                   </div>
