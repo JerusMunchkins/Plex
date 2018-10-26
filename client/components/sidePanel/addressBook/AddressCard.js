@@ -70,11 +70,11 @@ class AddressCard extends React.Component {
     const {userId, homes} = this.props
     if (this.props.home) {
       const {id: homeId} = this.props.home
-      this.props.deleteHome({userId, homeId})
-      this.props.deleteHomeInHomePlaces(homeId)
-      this.props.deleteHomeInCategoryResults(homeId)
-      this.props.deleteHomeInHomeCategory(homeId)
-      this.props.deleteRanks(homeId)
+      await this.props.deleteHome({userId, homeId})
+      await this.props.deleteHomeInHomePlaces(homeId)
+      await this.props.deleteHomeInCategoryResults(homeId)
+      await this.props.deleteHomeInHomeCategory(homeId)
+      this.props.updateRanks()
     } else {
       const {id: placeId} = this.props.place
       await this.props.deletePlace({userId, placeId})

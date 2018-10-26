@@ -90,7 +90,7 @@ export const deleteHome = ({userId, homeId}) => async dispatch => {
 
     // GET all homes
     const {data: {homes}} = await axios.get(`/api/users/${userId}/homes`)
-    dispatch(gotHomes(homes))
+    await dispatch(gotHomes(homes))
   } catch (err) {
     console.log('An error occurred while deleting homes')
   }

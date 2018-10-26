@@ -80,9 +80,10 @@ export const deletePlaceInHomePlaces = (placeId, homes) => dispatch => {
 }
 
 // remove home from homePlaces (remove home)
-export const deleteHomeInHomePlaces = homeId => dispatch => {
+export const deleteHomeInHomePlaces = homeId => async dispatch => {
   try {
-    dispatch(deletedHomeInHomePlaces(homeId))
+    await dispatch(fetchHomePlacesRequest())
+    await dispatch(deletedHomeInHomePlaces(homeId))
   } catch (err) {
     console.error(err)
   }
@@ -106,12 +107,18 @@ export default function(state = initialState, action) {
     case DELETED_HOME_IN_HOME_PLACES:
       const removedHomeState = {...state}
       delete removedHomeState[action.homeId]
+      removedHomeState.loaded = true
+      removedHomeState.fetchingCategoryResults = false
+      removedHomeState.errorFetching = false
       return removedHomeState
     case DELETED_PLACE_IN_HOME_PLACES:
       const removedPlaceState = {...state}
       action.homes.forEach(home => {
         delete removedPlaceState[home.id][action.placeId]
       })
+      removedPlaceState.loaded = true
+      removedPlaceState.fetchingCategoryResults = false
+      removedPlaceState.errorFetching = false
       return removedPlaceState
     case FETCH_HOME_PLACES_REQUEST:
       return {

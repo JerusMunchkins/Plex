@@ -49,6 +49,14 @@ const PlaceInfo = props => {
     priorities,
     categoryResults
   } = props
+  // console.log(homeCategories)
+  // console.log(homeId)
+  // console.log(priorities)
+  // console.log(homePlaces)
+
+  if (!homeCategories[homeId]) return null
+  if (!homePlaces) return null
+
   return homeCategories.loaded &&
     categoryResults.loaded &&
     homePlaces.loaded ? (
@@ -57,6 +65,7 @@ const PlaceInfo = props => {
         if (!homeCategories[homeId][item.categoryId] && !item.placeId) {
           return
         }
+        if (!homePlaces[homeId]) return
         const name = item.placeId
           ? item.label
           : `${homeCategories[homeId][item.categoryId].name}`
@@ -66,6 +75,11 @@ const PlaceInfo = props => {
               .split('_')
               .map(word => word[0].toUpperCase() + word.slice(1))
               .join(' ')
+
+        console.log('homePlaces', homePlaces)
+        console.log('homeId', homeId)
+        console.log('homePlaces[homeId]', homePlaces[homeId])
+
         const info = item.placeId
           ? homePlaces[homeId][item.placeId]
           : homeCategories[homeId][item.categoryId]
