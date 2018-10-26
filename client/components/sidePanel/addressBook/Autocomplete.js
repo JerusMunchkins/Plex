@@ -7,9 +7,9 @@ import PlacesAutocomplete, {
 import {withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
-import {postHome, postPlace} from '../../../store'
+import {postHome, postPlace, getRanks, updateRanks} from '../../../store'
 import {withScriptjs} from 'react-google-maps'
-import {renderFuncSearch} from '../../../utilities'
+import {renderFuncSearch, rankHomes as ranker} from '../../../utilities'
 
 const styles = theme => ({
   button: {
@@ -36,16 +36,35 @@ class Autocomplete extends React.Component {
     this.setState({address})
   }
 
+  rankHomes = () => {
+    const {homes, homeCategories, homePlaces, selectedCategories} = this.props
+    const data = ranker(
+      homes,
+      homeCategories,
+      homePlaces,
+      selectedCategories.selectedCategories
+    )
+    return data
+  }
+
   handleClick = async event => {
     const {address} = this.state
-    const {userId, type, homes} = this.props
+    const {
+      userId,
+      type,
+      homes,
+      homeCategories,
+      homePlaces,
+      selectedCategories
+    } = this.props
     const homesIdList = homes.map(home => home.id)
     const name = type === 'Place' ? address.split(',')[0] : ''
     try {
       this.setState({address})
       const [res] = await geocodeByAddress(address)
       const {lat, lng} = await getLatLng(res)
-      await this.props[`post${type}`]({
+
+      this.props[`post${type}`]({
         userId,
         address,
         name,
@@ -53,7 +72,18 @@ class Autocomplete extends React.Component {
         lng,
         homesIdList
       })
-      this.setState({address: ''})
+        .then(() => {
+          this.setState({address: ''})
+        })
+        .then(() => {
+          const data = this.rankHomes(
+            homes,
+            homeCategories,
+            homePlaces,
+            selectedCategories.selectedCategories
+          )
+          this.props.getRanks(data)
+        })
     } catch (err) {
       console.error(err)
     }
@@ -65,6 +95,7 @@ class Autocomplete extends React.Component {
 
   render() {
     const {classes} = this.props
+
     return (
       <div className="search-wrap">
         <PlacesAutocomplete
@@ -91,11 +122,19 @@ class Autocomplete extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({userId: state.user.id, homes: state.homes})
+const mapStateToProps = state => ({
+  userId: state.user.id,
+  homes: state.homes,
+  homeCategories: state.homeCategories,
+  homePlaces: state.homePlaces,
+  selectedCategories: state.selectedCategories
+})
 
 const mapDispatchToProps = dispatch => ({
   postHome: payload => dispatch(postHome(payload)),
-  postPlace: payload => dispatch(postPlace(payload))
+  postPlace: payload => dispatch(postPlace(payload)),
+  getRanks: rankData => dispatch(getRanks(rankData)),
+  updateRanks: data => dispatch(updateRanks(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

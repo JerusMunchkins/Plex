@@ -161,9 +161,11 @@ export const deleteOneCategoryResults = (categoryId, homes) => dispatch => {
 }
 
 // removes all categoryResults for one home (remove home)
-export const deleteHomeInCategoryResults = homeId => dispatch => {
+export const deleteHomeInCategoryResults = homeId => async dispatch => {
   try {
-    dispatch(deletedHomeInCategoryResults(homeId))
+    await dispatch(fetchCategoryResultsRequest())
+
+    await dispatch(deletedHomeInCategoryResults(homeId))
   } catch (err) {
     console.error(err)
   }
@@ -208,6 +210,9 @@ export default function(state = initialState, action) {
     case DELETED_HOME_IN_CATEGORY_RESULTS:
       const removedHomeState = {...state}
       delete removedHomeState[action.homeId]
+      removedHomeState.loaded = true
+      removedHomeState.fetchingCategoryResults = false
+      removedHomeState.errorFetching = false
       return removedHomeState
     case FETCH_CATEGORY_RESULTS_REQUEST:
       return {

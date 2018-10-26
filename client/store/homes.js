@@ -4,7 +4,6 @@ import {
   fetchOneHomePlaces,
   fetchAllCategoryResultsOneHome
 } from './index'
-import {getStreetViewUrl} from '../../server/services'
 
 const GOT_HOMES = 'GOT_HOMES'
 const REMOVE_HOMES = 'REMOVE_HOMES'
@@ -42,9 +41,9 @@ export const postHome = ({userId, address, lat, lng}) => async dispatch => {
     // GET all homes
     const {data: {homes}} = await axios.get(`/api/users/${userId}/homes`)
 
-    dispatch(fetchOneHomePlaces(userId, homeId))
-    dispatch(fetchAllCategoryResultsOneHome(userId, homeId, {lat, lng}))
-    dispatch(gotHomes(homes))
+    await dispatch(fetchOneHomePlaces(userId, homeId))
+    await dispatch(fetchAllCategoryResultsOneHome(userId, homeId, {lat, lng}))
+    await dispatch(gotHomes(homes))
   } catch (err) {
     console.error('An error occurred while posting a new home')
   }
@@ -91,7 +90,7 @@ export const deleteHome = ({userId, homeId}) => async dispatch => {
 
     // GET all homes
     const {data: {homes}} = await axios.get(`/api/users/${userId}/homes`)
-    dispatch(gotHomes(homes))
+    await dispatch(gotHomes(homes))
   } catch (err) {
     console.log('An error occurred while deleting homes')
   }
