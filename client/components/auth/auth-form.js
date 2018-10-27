@@ -196,7 +196,7 @@ const mapDispatch = (dispatch, ownProps) => {
         dispatch(auth(email, password, formName, first, last))
         history.push('/begin')
       } else {
-        history.push('/home')
+        history.push('/')
       }
       window.setTimeout(
         dispatch,
