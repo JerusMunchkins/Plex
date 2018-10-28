@@ -25,7 +25,7 @@ const ModalAuth = props => {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
       open={true}
-      onBackdropClick={() => history.push('/home')}
+      onBackdropClick={() => history.push('/')}
     >
       <div className={classes.paper}>
         {type === 'login' ? <Login /> : <Signup />}

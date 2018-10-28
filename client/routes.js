@@ -2,12 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {
-  ScreensAbout,
-  ScreensBegin,
-  ScreensModalLogin,
-  ScreensModalSignup
-} from './screens'
+import {ScreensAbout, ScreensModalLogin, ScreensModalSignup} from './screens'
 import {me} from './store'
 
 class Routes extends Component {
@@ -18,30 +13,7 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
-        <Route
-          exact
-          path="/"
-          render={() =>
-            this.props.center ? (
-              <Redirect to="/welcome" />
-            ) : (
-              <Redirect to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/home"
-          render={() =>
-            this.props.center ? (
-              <Redirect to="/welcome" />
-            ) : (
-              <Redirect to="/home" />
-            )
-          }
-        />
         <Route path="/about" component={ScreensAbout} />
-        <Route path="/begin" component={ScreensBegin} />
-        <Route path="/welcome" component={ScreensAbout} />
         <Route path="/login" component={ScreensModalLogin} />
         <Route path="/signup" component={ScreensModalSignup} />
       </Switch>

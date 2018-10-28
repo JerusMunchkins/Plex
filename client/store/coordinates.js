@@ -27,22 +27,6 @@ const gotBounds = payload => ({
   bounds: payload
 })
 
-export const getCenter = (city, state) => {
-  return async dispatch => {
-    try {
-      const {data} = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=,+${city},+${state}&key=${
-          process.env.GOOGLE_API_KEY
-        }`
-      )
-      const {lat, lng} = data.results[0].geometry.location
-      dispatch(gotCenter({lat, lng}))
-    } catch (err) {
-      console.error(err)
-    }
-  }
-}
-
 export const getBounds = (markers, centerLatLng) => {
   return async dispatch => {
     if (markers[0]) {
@@ -65,7 +49,10 @@ export const getBounds = (markers, centerLatLng) => {
 }
 
 const initialState = {
-  center: {},
+  center: {
+    lat: 41.8781,
+    lng: -87.6298
+  },
   bounds: [],
   selectedHomeId: null,
   selectedPlaceId: null

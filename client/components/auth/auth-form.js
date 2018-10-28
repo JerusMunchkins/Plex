@@ -32,7 +32,7 @@ class AuthForm extends React.Component {
   }
 
   render() {
-    const {name, displayName, handleSubmit, error} = this.props
+    const {name, displayName, handleSubmit, error, history} = this.props
     return (
       <div className="flex-container auth-wrap">
         <form onSubmit={handleSubmit} name={name} className="auth-form">
@@ -144,9 +144,15 @@ class AuthForm extends React.Component {
                 <Button
                   variant="contained"
                   style={{width: '100%'}}
-                  onClick={() => this.handleClick('signup')}
+                  onClick={() => {
+                    if (name === 'login') {
+                      history.push('/signup')
+                    } else {
+                      history.push('/login')
+                    }
+                  }}
                 >
-                  Signup
+                  {name === 'login' ? 'Sign Up' : 'Log In'}
                 </Button>
               </div>
             </div>
@@ -190,7 +196,7 @@ const mapDispatch = (dispatch, ownProps) => {
         dispatch(auth(email, password, formName, first, last))
         history.push('/begin')
       } else {
-        history.push('/home')
+        history.push('/')
       }
       window.setTimeout(
         dispatch,

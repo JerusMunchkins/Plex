@@ -49,14 +49,7 @@ class Autocomplete extends React.Component {
 
   handleClick = async event => {
     const {address} = this.state
-    const {
-      userId,
-      type,
-      homes,
-      homeCategories,
-      homePlaces,
-      selectedCategories
-    } = this.props
+    const {userId, type, homes} = this.props
     const homesIdList = homes.map(home => home.id)
     const name = type === 'Place' ? address.split(',')[0] : ''
     try {
@@ -64,7 +57,7 @@ class Autocomplete extends React.Component {
       const [res] = await geocodeByAddress(address)
       const {lat, lng} = await getLatLng(res)
 
-      this.props[`post${type}`]({
+      await this.props[`post${type}`]({
         userId,
         address,
         name,
@@ -72,18 +65,8 @@ class Autocomplete extends React.Component {
         lng,
         homesIdList
       })
-        .then(() => {
-          this.setState({address: ''})
-        })
-        .then(() => {
-          const data = this.rankHomes(
-            homes,
-            homeCategories,
-            homePlaces,
-            selectedCategories.selectedCategories
-          )
-          this.props.getRanks(data)
-        })
+
+      this.props.updateRanks()
     } catch (err) {
       console.error(err)
     }
@@ -134,7 +117,7 @@ const mapDispatchToProps = dispatch => ({
   postHome: payload => dispatch(postHome(payload)),
   postPlace: payload => dispatch(postPlace(payload)),
   getRanks: rankData => dispatch(getRanks(rankData)),
-  updateRanks: data => dispatch(updateRanks(data))
+  updateRanks: () => dispatch(updateRanks())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
