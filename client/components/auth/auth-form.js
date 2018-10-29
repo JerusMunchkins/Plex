@@ -180,8 +180,7 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
-  const {history} = ownProps
+const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
@@ -197,22 +196,6 @@ const mapDispatch = (dispatch, ownProps) => {
       }
 
       dispatch(auth(email, password, formName, first, last))
-
-      // let first = null
-      // let last = null
-      // if (formName === 'signup') {
-      //   first = evt.target.first.value
-      //   last = evt.target.last.value
-      //   dispatch(auth(email, password, formName, first, last))
-      //   history.push('/begin')
-      // } else {
-      //   history.push('/')
-      // }
-      // window.setTimeout(
-      //   dispatch,
-      //   500,
-      //   auth(email, password, formName, first, last)
-      // )
     }
   }
 }
