@@ -188,8 +188,13 @@ const mapDispatch = (dispatch, ownProps) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const first = evt.target.first.value
-      const last = evt.target.last.value
+      let first = null
+      let last = null
+
+      if (formName === 'signup') {
+        first = evt.target.first.value
+        last = evt.target.last.value
+      }
 
       dispatch(auth(email, password, formName, first, last))
 

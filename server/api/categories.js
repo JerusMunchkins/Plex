@@ -35,9 +35,9 @@ router.get('/:userId', async (req, res, next) => {
       FROM priorities
       LEFT JOIN categories ON "priorities"."categoryId" = categories.id
       LEFT JOIN places ON "priorities"."placeId" = places.id
-      WHERE "priorities"."userId" = 1
+      WHERE "priorities"."userId" = :userId
       ORDER BY priorities.priority;`,
-      {replacements: {userId: userId}, type: Sequelize.QueryTypes.SELECT}
+      {replacements: {userId}, type: Sequelize.QueryTypes.SELECT}
     )
     res.status(200).json(categories)
   } catch (err) {
