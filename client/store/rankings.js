@@ -2,7 +2,7 @@ import {rankHomes} from '../utilities'
 
 const GOT_RANKS = 'GET_RANKS'
 const UPDATED_RANKS = 'GET_RANKS'
-const DELETED_RANKS = 'DELETE_RANKS'
+const REMOVE_RANKINGS = 'REMOVE_RANKINGS'
 
 const gotRanks = rankData => ({
   type: GOT_RANKS,
@@ -11,6 +11,9 @@ const gotRanks = rankData => ({
 const updatedRanks = rankData => ({
   type: UPDATED_RANKS,
   rankData
+})
+export const removeRankings = () => ({
+  type: REMOVE_RANKINGS
 })
 
 export const getRanks = rankData => dispatch => {
@@ -64,8 +67,8 @@ export default function(state = initialState, action) {
         ...state,
         data: {...action.rankData}
       }
-    case DELETED_RANKS:
-      return
+    case REMOVE_RANKINGS:
+      return initialState
     default:
       return state
   }

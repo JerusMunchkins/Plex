@@ -8,6 +8,7 @@ const FETCH_HOME_CATEGORIES_REQUEST = 'FETCH_HOME_CATEGORIES_REQUEST'
 const FETCH_HOME_CATEGORIES_ERROR = 'FETCH_HOME_CATEGORIES_ERROR'
 const DELETED_ONE_HOME_CATEGORIES = 'DELETED_ONE_HOME_CATEGORIES'
 const DELETED_HOME_IN_HOME_CATEGORIES = 'DELETED_HOME_IN_HOME_CATEGORIES'
+const REMOVE_HOME_CATEGORIES = 'REMOVE_HOME_CATEGORIES'
 
 const fetchAllHomeCategoriesSuccess = homeCategories => ({
   type: FETCH_ALL_HOME_CATEGORIES_SUCCESS,
@@ -37,6 +38,9 @@ const deletedOneHomeCategories = (categoryId, homes) => ({
 const deletedHomeInHomeCategories = homeId => ({
   type: DELETED_HOME_IN_HOME_CATEGORIES,
   homeId
+})
+export const removeHomeCategories = () => ({
+  type: REMOVE_HOME_CATEGORIES
 })
 
 // gets all homeCategories for user upon login
@@ -360,6 +364,8 @@ export default function(state = initialState, action) {
         fetchingHomeCategories: false,
         errorFetching: false
       }
+    case REMOVE_HOME_CATEGORIES:
+      return initialState
     default:
       return state
   }

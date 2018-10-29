@@ -5,6 +5,7 @@ const FETCH_HOME_PLACES_REQUEST = 'FETCH_HOME_PLACES_REQUEST'
 const FETCH_HOME_PLACES_ERROR = 'FETCH_HOME_PLACES_ERROR'
 const DELETED_HOME_IN_HOME_PLACES = 'DELETED_HOME_IN_HOME_PLACES'
 const DELETED_PLACE_IN_HOME_PLACES = 'DELETED_PLACE_IN_HOME_PLACES'
+const REMOVE_HOME_PLACES = 'REMOVE_HOME_PLACES'
 
 const fetchAllHomePlacesSuccess = homePlaces => ({
   type: FETCH_ALL_HOME_PLACES_SUCCESS,
@@ -24,6 +25,9 @@ const deletedPlaceInHomePlaces = (placeId, homes) => ({
   type: DELETED_PLACE_IN_HOME_PLACES,
   placeId,
   homes
+})
+export const removeHomePlaces = () => ({
+  type: REMOVE_HOME_PLACES
 })
 
 // get all homePlaces for user upon login
@@ -134,6 +138,8 @@ export default function(state = initialState, action) {
         fetchingCategoryResults: false,
         errorFetching: true
       }
+    case REMOVE_HOME_PLACES:
+      return initialState
     default:
       return state
   }
