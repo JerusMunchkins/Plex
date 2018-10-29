@@ -6,7 +6,13 @@ import {
   fetchSelectedCategories,
   fetchAllHomePlaces,
   removeHomes,
-  removePlaces
+  removePlaces,
+  removeCategoryResults,
+  removeHomeCategories,
+  removeHomePlaces,
+  removeSelectedCategories,
+  removeRankings,
+  resetCoordinates
 } from './index'
 
 const GET_USER = 'GET_USER'
@@ -55,6 +61,12 @@ export const logout = () => async dispatch => {
     dispatch(removeUser())
     dispatch(removeHomes())
     dispatch(removePlaces())
+    dispatch(removeCategoryResults())
+    dispatch(removeHomeCategories())
+    dispatch(removeHomePlaces())
+    dispatch(removeSelectedCategories())
+    dispatch(removeRankings())
+    dispatch(resetCoordinates())
     history.push('/home')
   } catch (err) {
     console.error(err)

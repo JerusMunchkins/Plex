@@ -7,8 +7,7 @@ const FETCH_SELECTED_CATEGORIES_SUCCESS = 'FETCH_SELECTED_CATEGORIES_SUCCESS'
 const FETCH_SELECTED_CATEGORIES_ERROR = 'FETCH_SELECTED_CATEGORIES_ERROR'
 const ADD_NEW_SELECTED_FILTER = 'ADD_NEW_SELECTED_FILTER'
 const REMOVE_SELECTED_FILTER = 'REMOVE_SELECTED_FILTER'
-const ADD_PLACE_SELECTED_FILTER = 'ADD_PLACE_SELECTED_FILTER'
-const REMOVE_PLACE_SELECTED_FILTER = 'REMOVE_PLACE_SELECTED_FILTER'
+const REMOVE_SELECTED_CATEGORIES = 'REMOVE_SELECTED_CATEGORIES'
 
 // ACTION CREATORS
 
@@ -22,10 +21,12 @@ export const fetchSelectedCategoriesSuccess = selectedCategories => ({
 const fetchSelectedCategoriesError = () => ({
   type: FETCH_SELECTED_CATEGORIES_ERROR
 })
-
 export const addNewSelectedFilter = category => ({
   type: ADD_NEW_SELECTED_FILTER,
   payload: category
+})
+export const removeSelectedCategories = () => ({
+  type: REMOVE_SELECTED_CATEGORIES
 })
 
 // THUNK CREATORS
@@ -119,6 +120,8 @@ export default function(state = initialState, action) {
           ...state.sselectedCategories.slice(action.payload + 1)
         ]
       }
+    case REMOVE_SELECTED_CATEGORIES:
+      return initialState
     default:
       return state
   }
