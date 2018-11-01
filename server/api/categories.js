@@ -3,15 +3,7 @@ const {Category, Priority} = require('../db/models')
 // Neded for RAW query
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
-const pkg = require('../../package.json')
-const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
-const db = new Sequelize(
-  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
-  {
-    logging: false
-  }
-)
-
+const db = require('../db')
 module.exports = router
 
 // All Categories for Category Filter menu
