@@ -110,25 +110,6 @@ router.post('/places', async (req, res, next) => {
   }
 })
 
-//GET user_categories
-router.get('/:userId/categories', async (req, res, next) => {
-  try {
-    let {userId} = req.params
-    let selectedCategories = await User.findOne({
-      where: {id: userId},
-      include: [
-        {
-          model: Category,
-          attributes: {exclude: ['createdAt', 'updatedAt']}
-        }
-      ]
-    })
-    res.status(200).json(selectedCategories)
-  } catch (err) {
-    next(err)
-  }
-})
-
 // get users home_place
 router.get('/:userId/home_places', async (req, res, next) => {
   try {
