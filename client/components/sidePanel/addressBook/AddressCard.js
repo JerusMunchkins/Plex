@@ -23,7 +23,8 @@ import {
   deletePlaceInHomePlaces,
   fetchSelectedCategories,
   deleteRanks,
-  updateRanks
+  updateRanks,
+  removeHomeGuest
 } from '../../../store'
 
 const styles = theme => ({
@@ -68,19 +69,33 @@ class AddressCard extends React.Component {
 
   handleDelete = async () => {
     const {userId, homes} = this.props
-    if (this.props.home) {
-      const {id: homeId} = this.props.home
-      await this.props.deleteHome({userId, homeId})
-      await this.props.deleteHomeInHomePlaces(homeId)
-      await this.props.deleteHomeInCategoryResults(homeId)
-      await this.props.deleteHomeInHomeCategory(homeId)
-      this.props.updateRanks()
+
+    console.log(userId, 'USER ID')
+
+    if (userId) {
+      if (this.props.home) {
+        const {id: homeId} = this.props.home
+        await this.props.deleteHome({userId, homeId})
+        await this.props.deleteHomeInHomePlaces(homeId)
+        await this.props.deleteHomeInCategoryResults(homeId)
+        await this.props.deleteHomeInHomeCategory(homeId)
+        this.props.updateRanks()
+      } else {
+        const {id: placeId} = this.props.place
+        await this.props.deletePlace({userId, placeId})
+        await this.props.deletePlaceInHomePlaces(placeId, homes)
+        await this.props.fetchSelectedCategories(userId)
+        this.props.updateRanks()
+      }
     } else {
-      const {id: placeId} = this.props.place
-      await this.props.deletePlace({userId, placeId})
-      await this.props.deletePlaceInHomePlaces(placeId, homes)
-      await this.props.fetchSelectedCategories(userId)
-      this.props.updateRanks()
+      console.log('no user id')
+      if (this.props.home) {
+        const {id: homeId} = this.props.home
+        await this.props.removeHomeGuest(homeId)
+        this.props.updateRanks()
+      } else {
+        const {id: placeId} = this.props.place
+      }
     }
   }
 
@@ -147,7 +162,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(deletePlaceInHomePlaces(placeId, homes)),
   fetchSelectedCategories: userId => dispatch(fetchSelectedCategories(userId)),
   deleteRanks: homeId => dispatch(deleteRanks(homeId)),
-  updateRanks: () => dispatch(updateRanks())
+  updateRanks: () => dispatch(updateRanks()),
+  removeHomeGuest: homeId => dispatch(removeHomeGuest(homeId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -14,7 +14,7 @@ const styles = theme => ({
 
 class List extends React.Component {
   render() {
-    const {userId, list, name, children, classes, fetching} = this.props
+    const {list, name, children, classes, fetching} = this.props
 
     return !list ? (
       children

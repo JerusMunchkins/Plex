@@ -12,7 +12,7 @@ import {
   postPlace,
   getRanks,
   updateRanks,
-  addedHomeGuest
+  addHomeGuest
 } from '../../../store'
 import {withScriptjs} from 'react-google-maps'
 import {renderFuncSearch, rankHomes as ranker} from '../../../utilities'
@@ -89,7 +89,7 @@ class Autocomplete extends React.Component {
           },
           price: null
         }
-        await this.props.addedHomeGuest(home)
+        await this.props.addHomeGuest(home)
       }
       console.log('got to end of handleClick')
       this.props.updateRanks()
@@ -121,7 +121,7 @@ class Autocomplete extends React.Component {
           aria-label="Add"
           size="small"
           className={classes.button}
-          disabled={this.state.address ? false : true}
+          disabled={!this.state.address}
           onClick={this.handleClick}
         >
           <AddIcon />
@@ -144,7 +144,7 @@ const mapDispatchToProps = dispatch => ({
   postPlace: payload => dispatch(postPlace(payload)),
   getRanks: rankData => dispatch(getRanks(rankData)),
   updateRanks: () => dispatch(updateRanks()),
-  addedHomeGuest: home => dispatch(addedHomeGuest(home))
+  addHomeGuest: home => dispatch(addHomeGuest(home))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
