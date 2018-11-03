@@ -7,9 +7,11 @@ import {
 
 const GOT_HOMES = 'GOT_HOMES'
 const REMOVE_HOMES = 'REMOVE_HOMES'
+const ADDED_HOME_GUEST = 'ADDED_HOME_GUEST'
 
 const gotHomes = homes => ({type: GOT_HOMES, homes})
 export const removeHomes = () => ({type: REMOVE_HOMES})
+export const addedHomeGuest = home => ({type: ADDED_HOME_GUEST, home})
 
 export const fetchHomes = userId => async dispatch => {
   try {
@@ -104,6 +106,8 @@ export default function(state = initialState, action) {
       return action.homes
     case REMOVE_HOMES:
       return initialState
+    case ADDED_HOME_GUEST:
+      return [...state, action.home]
     default:
       return state
   }

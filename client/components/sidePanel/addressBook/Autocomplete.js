@@ -7,7 +7,13 @@ import PlacesAutocomplete, {
 import {withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
-import {postHome, postPlace, getRanks, updateRanks} from '../../../store'
+import {
+  postHome,
+  postPlace,
+  getRanks,
+  updateRanks,
+  addedHomeGuest
+} from '../../../store'
 import {withScriptjs} from 'react-google-maps'
 import {renderFuncSearch, rankHomes as ranker} from '../../../utilities'
 
@@ -47,25 +53,45 @@ class Autocomplete extends React.Component {
     return data
   }
 
+  // add guest if conditional
   handleClick = async event => {
     const {address} = this.state
     const {userId, type, homes} = this.props
     const homesIdList = homes.map(home => home.id)
     const name = type === 'Place' ? address.split(',')[0] : ''
     try {
-      this.setState({address})
+      // this.setState({address})
       const [res] = await geocodeByAddress(address)
       const {lat, lng} = await getLatLng(res)
 
-      await this.props[`post${type}`]({
-        userId,
-        address,
-        name,
-        lat,
-        lng,
-        homesIdList
-      })
+      console.log('USER ID', userId)
 
+      if (userId) {
+        await this.props[`post${type}`]({
+          userId,
+          address,
+          name,
+          lat,
+          lng,
+          homesIdList
+        })
+      } else {
+        console.log('GUEST NEW HOME')
+        const homeId = homes.length + 1
+        const home = {
+          id: homeId, // replace this
+          imgUrl: 'https://bit.ly/2DDPIm8',
+          link: null,
+          location: {
+            address,
+            lat,
+            lng
+          },
+          price: null
+        }
+        await this.props.addedHomeGuest(home)
+      }
+      console.log('got to end of handleClick')
       this.props.updateRanks()
     } catch (err) {
       console.error(err)
@@ -117,7 +143,8 @@ const mapDispatchToProps = dispatch => ({
   postHome: payload => dispatch(postHome(payload)),
   postPlace: payload => dispatch(postPlace(payload)),
   getRanks: rankData => dispatch(getRanks(rankData)),
-  updateRanks: () => dispatch(updateRanks())
+  updateRanks: () => dispatch(updateRanks()),
+  addedHomeGuest: home => dispatch(addedHomeGuest(home))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
