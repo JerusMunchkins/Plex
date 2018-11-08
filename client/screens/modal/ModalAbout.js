@@ -4,10 +4,8 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import Slide from '@material-ui/core/Slide'
-import {Login, Signup, Welcome} from '../../components'
-import Paper from '@material-ui/core/Paper'
+import {Login, Signup} from '../../components'
 
 const styles = theme => ({
   paper: {
