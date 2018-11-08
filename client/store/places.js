@@ -99,7 +99,7 @@ export const deletePlace = ({userId, placeId}) => async dispatch => {
     const {data: {places}} = await axios.get(`/api/users/${userId}/places`)
     dispatch(gotPlaces(places))
   } catch (err) {
-    console.log('An error occurred while deleting places')
+    console.error('An error occurred while deleting places', err)
   }
 }
 
