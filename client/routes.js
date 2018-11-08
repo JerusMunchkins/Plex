@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
+import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {ScreensAbout, ScreensModalLogin, ScreensModalSignup} from './screens'
 import {me} from './store'
@@ -13,6 +13,8 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
+        {!this.props.isLoggedIn && <Route path="/" component={ScreensAbout} />}
+        <Route path="/welcome" component={ScreensAbout} />
         <Route path="/about" component={ScreensAbout} />
         <Route path="/login" component={ScreensModalLogin} />
         <Route path="/signup" component={ScreensModalSignup} />
