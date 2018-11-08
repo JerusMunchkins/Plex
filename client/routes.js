@@ -13,6 +13,18 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
+        <Route
+          exact
+          path="/"
+          render={() =>
+            !this.props.isLoggedIn ? (
+              <Redirect to="/welcome" />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
+        />
+        <Route path="/welcome" component={ScreensAbout} />
         <Route path="/about" component={ScreensAbout} />
         <Route path="/login" component={ScreensModalLogin} />
         <Route path="/signup" component={ScreensModalSignup} />

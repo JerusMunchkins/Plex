@@ -37,7 +37,7 @@ class ModalAbout extends React.Component {
   }
 
   render() {
-    const {classes, history, location, center} = this.props
+    const {classes, history, location, isLoggedIn} = this.props
     const {checked} = this.state
     const {pathname} = location
     return (
@@ -45,7 +45,7 @@ class ModalAbout extends React.Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={!center.lat || pathname === '/about'}
+          open={!isLoggedIn}
           onBackdropClick={() => {
             pathname === '/about' && history.push('/home')
           }}
@@ -63,37 +63,15 @@ class ModalAbout extends React.Component {
                   options when looking for a new home
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  It's simple: give us a list of places that matter to you, and
-                  we'll figure out which of your provided home listings is the
-                  best match.
+                  To get started, login or signup
                 </Typography>
-                {pathname === '/welcome' && (
-                  <div>
-                    <Typography variant="display2">Get Started</Typography>
-                    <div className="about-option">
-                      <Typography
-                        style={{
-                          color: 'gray',
-                          textAlign: 'center'
-                        }}
-                        variant="title"
-                        gutterBottom
-                      >
-                        Enter the city of your next move
-                      </Typography>
-
-                      <Welcome />
-                    </div>
-
-                    <div className="about-option">
-                      {this.state.auth === 'login' ? (
-                        <Login handleSlide={this.handleSlide} />
-                      ) : (
-                        <Signup handleSlide={this.handleSlide} />
-                      )}
-                    </div>
-                  </div>
-                )}
+                <div className="about-option">
+                  {this.state.auth === 'login' ? (
+                    <Login handleSlide={this.handleSlide} />
+                  ) : (
+                    <Signup handleSlide={this.handleSlide} />
+                  )}
+                </div>
               </div>
             </Slide>
           </div>
@@ -103,7 +81,10 @@ class ModalAbout extends React.Component {
   }
 }
 
-const mapState = state => ({center: state.coordinates.center})
+const mapState = state => ({
+  center: state.coordinates.center,
+  isLoggedIn: !!state.user.id
+})
 
 ModalAbout.propTypes = {
   classes: PropTypes.object.isRequired
