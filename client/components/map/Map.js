@@ -106,7 +106,7 @@ class GMap extends React.Component {
         {homes &&
           homes.map(marker => (
             <MarkerInfo
-              icon={'icons/house.png'}
+              icon="icons/house.png"
               position={{lat: marker.location.lat, lng: marker.location.lng}}
               image={marker.imgUrl}
               name={marker.name}
@@ -117,7 +117,7 @@ class GMap extends React.Component {
           ))}
         {places.map(marker => (
           <MarkerInfo
-            icon={'icons/star.png'}
+            icon="icons/star.png"
             position={{lat: marker.location.lat, lng: marker.location.lng}}
             name={marker.name}
             address={marker.location.address}

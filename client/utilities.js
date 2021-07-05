@@ -188,22 +188,29 @@ export const states = [
 ]
 
 export const rankHomes = (homes, homeCategories, homePlaces, priorities) => {
+  console.log('HOMES IN RANKER', homes)
   const homeIdScores = {}
 
   homes.forEach(home => {
-    let score = 0
+    if (priorities.length) {
+      let score = 0
 
-    priorities.forEach(item => {
-      if (item.placeId) {
-        score += homePlaces[home.id][item.placeId].distanceValue * item.priority
-      } else {
-        score +=
-          homeCategories[home.id][item.categoryId].distanceValue * item.priority
-      }
-    })
-
-    homeIdScores[score] = home.id
+      priorities.forEach(item => {
+        if (item.placeId) {
+          score +=
+            homePlaces[home.id][item.placeId].distanceValue * item.priority
+        } else {
+          score +=
+            homeCategories[home.id][item.categoryId].distanceValue *
+            item.priority
+        }
+      })
+      homeIdScores[score] = home.id
+    } else {
+      homeIdScores[home.id] = home.id
+    }
   })
+  console.log(homeIdScores)
 
   const sortedScores = sort(Object.keys(homeIdScores))
 

@@ -25,6 +25,7 @@ export const getRanks = rankData => dispatch => {
 }
 export const updateRanks = () => (dispatch, getState) => {
   try {
+    console.log('GOT TO UPDATE RANKS THUNK')
     const state = getState()
     const {homes, homeCategories, homePlaces, selectedCategories} = state
     const rankData = rankHomes(
@@ -65,7 +66,8 @@ export default function(state = initialState, action) {
     case UPDATED_RANKS:
       return {
         ...state,
-        data: {...action.rankData}
+        data: {...action.rankData},
+        called: true
       }
     case REMOVE_RANKINGS:
       return initialState

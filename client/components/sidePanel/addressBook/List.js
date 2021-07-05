@@ -8,16 +8,15 @@ import {sort} from '../../../utilities'
 
 const styles = theme => ({
   progress: {
-    position: 'absolute',
-    
+    position: 'absolute'
   }
 })
 
 class List extends React.Component {
   render() {
-    const {userId, list, name, children, classes, fetching} = this.props
+    const {list, name, children, classes, fetching} = this.props
 
-    return !userId || !list ? (
+    return !list ? (
       children
     ) : (
       <div>
@@ -36,15 +35,11 @@ class List extends React.Component {
             )
           })}
         </ul>
-        {
-          fetching &&
+        {fetching && (
           <div className="flex-container menu-buttons">
-            <CircularProgress
-              className={classes.progress}
-              color="secondary"
-            />
+            <CircularProgress className={classes.progress} color="secondary" />
           </div>
-        }
+        )}
       </div>
     )
   }
@@ -54,7 +49,7 @@ const mapHomes = state => ({
   userId: state.user.id,
   list: state.homes,
   places: state.places,
-  name: 'homes',
+  name: 'homes'
 })
 
 const mapPlaces = state => ({
@@ -76,5 +71,9 @@ const mapPlacesDispatch = dispatch => {
   }
 }
 
-export const HomesList = connect(mapHomes, mapHomesDispatch)(withStyles(styles)(List))
-export const PlacesList = connect(mapPlaces, mapPlacesDispatch)(withStyles(styles)(List))
+export const HomesList = connect(mapHomes, mapHomesDispatch)(
+  withStyles(styles)(List)
+)
+export const PlacesList = connect(mapPlaces, mapPlacesDispatch)(
+  withStyles(styles)(List)
+)

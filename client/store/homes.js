@@ -7,9 +7,16 @@ import {
 
 const GOT_HOMES = 'GOT_HOMES'
 const REMOVE_HOMES = 'REMOVE_HOMES'
+const ADD_HOME_GUEST = 'ADD_HOME_GUEST'
+const REMOVE_HOME_GUEST = 'REMOVE_HOME_GUEST'
 
 const gotHomes = homes => ({type: GOT_HOMES, homes})
 export const removeHomes = () => ({type: REMOVE_HOMES})
+export const addHomeGuest = home => ({type: ADD_HOME_GUEST, home})
+export const removeHomeGuest = homeId => ({
+  type: REMOVE_HOME_GUEST,
+  homeId
+})
 
 export const fetchHomes = userId => async dispatch => {
   try {
@@ -104,6 +111,10 @@ export default function(state = initialState, action) {
       return action.homes
     case REMOVE_HOMES:
       return initialState
+    case ADD_HOME_GUEST:
+      return [...state, action.home]
+    case REMOVE_HOME_GUEST:
+      return state.filter(home => home.id !== action.homeId)
     default:
       return state
   }

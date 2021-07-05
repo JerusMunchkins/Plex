@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {ScreensAbout, ScreensModalLogin, ScreensModalSignup} from './screens'
-import {me} from './store'
+import {me, updateRanks} from './store'
 
 class Routes extends Component {
   componentDidMount() {
@@ -38,7 +38,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     loadInitialData() {
+      console.log('LOAD INITIAL DATA RAN')
       dispatch(me())
+      dispatch(updateRanks())
     }
   }
 }

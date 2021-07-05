@@ -7,19 +7,7 @@ const {
   Place,
   Priority
 } = require('../db/models')
-
-const Sequelize = require('sequelize')
-const pkg = require('../../package.json')
-
-const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
-
-const db = new Sequelize(
-  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
-  {
-    logging: false
-  }
-)
-module.exports = db
+const db = require('../db')
 
 module.exports = router
 
@@ -105,25 +93,6 @@ router.post('/places', async (req, res, next) => {
     await Priority.create({userId, placeId, priority})
 
     res.status(201).end()
-  } catch (err) {
-    next(err)
-  }
-})
-
-//GET user_categories
-router.get('/:userId/categories', async (req, res, next) => {
-  try {
-    let {userId} = req.params
-    let selectedCategories = await User.findOne({
-      where: {id: userId},
-      include: [
-        {
-          model: Category,
-          attributes: {exclude: ['createdAt', 'updatedAt']}
-        }
-      ]
-    })
-    res.status(200).json(selectedCategories)
   } catch (err) {
     next(err)
   }
